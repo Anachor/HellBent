@@ -1,24 +1,26 @@
-3D convex hull - nlogn
-Polygon Triangulation - nlogn/n
-Line Polygon Intersection
-KD Tree
-K log K all pair segment intersection
-Circle Circle Cover
-Circle Common Area
-Visibility Polygon
+K - Polygon Triangulation - nlogn/n
+K - Line Polygon Intersection
+K - K log K all pair segment intersection
+K - Circle Circle Cover
+K - Circle Common Area
+K - Visibility Polygon
+K - lattice points in a non-lattice polygon - emaxx 
+
 nd line point distance
 Voronoi Diagram nlogn + delaunay triangulation
-lattice points in a non-lattice polygon - emaxx 
-CPGeo.pdf
 Point Location - emaxx
 half space intersection
+KD Tree
+3D convex hull - nlogn
+
 simpson integration
 integration table
+CPGeo.pdf
 
 
 
 
 
 
-	
+
 
