@@ -1,3 +1,4 @@
+///Gives squared Distance
 long long ClosestPair(vector<pair<int, int>> pts) {
     int n = pts.size();
     sort(pts.begin(), pts.end());
