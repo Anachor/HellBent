@@ -1,4 +1,5 @@
 ///Gives squared Distance
+/// O(n log n)
 long long ClosestPair(vector<pair<int, int>> pts) {
     int n = pts.size();
     sort(pts.begin(), pts.end());
