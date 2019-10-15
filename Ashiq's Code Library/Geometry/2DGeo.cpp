@@ -50,7 +50,7 @@ struct Line {
 int dcmp(ld x) {
     if (fabs(x)<eps) return 0; return x<0 ? -1 : 1;
 }
-///intersection area of triangle((0,0), A, B) and circle with center cen, radius r
+///intersection signed area of triangle((0,0), A, B) and circle with center cen, radius r
 ld Tri_cross_Cir(PT A,PT B,PT cen,ld r){
   ld a,b,c,x,y,s=((A-cen)^(B-cen))*0.5;
   a=len(B-cen);b=len(A-cen);c=len(A-B);
