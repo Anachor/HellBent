@@ -50,35 +50,7 @@ struct Line {
 int dcmp(ld x) {
     if (fabs(x)<eps) return 0; return x<0 ? -1 : 1;
 }
-///intersection signed area of triangle((0,0), A, B) and circle with center cen, radius r
-ld Tri_cross_Cir(PT A,PT B,PT cen,ld r){
-  ld a,b,c,x,y,s=((A-cen)^(B-cen))*0.5;
-  a=len(B-cen);b=len(A-cen);c=len(A-B);
-  if(a<=r&&b<=r)return s;
-  else if(a<r&&b>=r) {
-    x=((A-B)*(cen-B)+sqrt(c* c*r*r-sqr((A-B)^(cen-B))))/c;
-    return asin(s*(c-x)*2.0/c/b/r)*r*r*0.5+s*x/c;
-  }
-  else if(a>=r&&b<r) {
-    y=((B-A)*(cen-A)+sqrt(c*c*r*r-sqr((B-A)^(cen-A))))/c;
-    return asin(s*(c-y)*2.0/c/a/r)*r*r*0.5+s*y/c;
-  }
-  else {
-    if(fabs(2.0*s)>=r*c||(B-A)*(cen-A)<=0||(A-B)*(cen-B)<=0) {
-      if((A-cen)*(B-cen)<0) {
-        if(((A-cen)^(B-cen))<0)
-          return (-pi-asin(s*2.0/a/b))*r*r*0.5;
-        else return (pi-asin(s*2.0/a/b))*r*r*0.5;
-      }
-      else return asin(s*2/a/b)*r*r*0.5;
-    }
-    else {
-      x=((A-B)*(cen-B)+sqrt(c*c*r*r-sqr((A-B)^(cen-B))))/c;
-      y=((B-A)*(cen-A)+sqrt(c*c*r*r-sqr((B-A)^(cen-A))))/c;
-      return (asin(s*(1-x/c)*2/r/b)+asin(s*(1-y/c)*2/r/a))*r*r*0.5+s*((y+x)/c-1);
-    }
-  }
-}
+
 /// determine if lines from a to b and c to d are parallel or collinear
 bool LinesParallel(PT a, PT b, PT c, PT d) {
   return fabs((b-a)^(c-d)) < eps;
