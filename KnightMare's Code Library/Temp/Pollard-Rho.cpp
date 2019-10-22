@@ -13,8 +13,8 @@ miller_rabin(n)
 pollard_rho(n):
     If n is prime, returns n
     Otherwise returns a proper divisor of n
-    Able to factorize ~50 18 digit semiprimes in 1 second on Toph
-    Able to factorize ~300 15 digit semiprimes in 1 second on Toph
+    Able to factorize ~120 18 digit semiprimes in 1 second on Toph
+    Able to factorize ~700 15 digit semiprimes in 1 second on Toph
 
 Note: for factorizing large number, do trial division upto
       cubic root and then call pollard rho once.
@@ -69,6 +69,19 @@ bool miller_rabin(LL n) {
 	return 1;
 }
 
+LL gcd(LL u, LL v) {
+    if (u == 0) return v;
+    if (v == 0) return u;
+    int shift = __builtin_ctzll(u | v);
+    u >>= __builtin_ctzll(u);
+    do {
+        v >>= __builtin_ctz(v);
+        if (u > v) swap(u, v);
+        v = v - u;
+    } while (v);
+    return u << shift;
+}
+
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 LL pollard_rho(LL n) {
     if (n==1)               return 1;
@@ -81,7 +94,7 @@ LL pollard_rho(LL n) {
         for (int sz=2; res == 1; sz*=2) {
             for (int i=0; i<sz && res<=1; i++) {
                 x = mult(x, x, n) + 1;
-                res = __gcd(abs(x-y), n);
+                res = gcd(abs(x-y), n);
             }
             y = x;
         }
@@ -90,7 +103,7 @@ LL pollard_rho(LL n) {
 }
 
 
-///Solves Uva 11476 - Factorizing Large Integers
+///Solves UVA - 11476
 const int MX = 2.2e5+7;
 vector<int> primes;
 bool isp[MX];
@@ -127,7 +140,6 @@ int main()
 //    freopen("in.txt", "r", stdin);
 //    freopen("out-mine.txt", "w", stdout);
     sieve();
-    cout<<primes.size()<<endl;
     int t;
     cin>>t;
 
