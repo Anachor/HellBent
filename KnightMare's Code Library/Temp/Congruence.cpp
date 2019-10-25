@@ -18,7 +18,7 @@ LL gcd(LL u, LL v) {
     int shift = __builtin_ctzll(u | v);
     u >>= __builtin_ctzll(u);
     do {
-        v >>= __builtin_ctz(v);
+        v >>= __builtin_ctzll(v);
         if (u > v) swap(u, v);
         v = v - u;
     } while (v);
