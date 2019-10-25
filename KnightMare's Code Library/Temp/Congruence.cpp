@@ -11,9 +11,18 @@ typedef pair<LL, LL> PLL;
 
 /// Computes gcd(a,b)
 /// Range: LL
-LL gcd(LL a, LL b) {
-	while (b) { LL t = a%b; a = b; b = t; }
-	return a;
+
+LL gcd(LL u, LL v) {
+    if (u == 0) return v;
+    if (v == 0) return u;
+    int shift = __builtin_ctzll(u | v);
+    u >>= __builtin_ctzll(u);
+    do {
+        v >>= __builtin_ctz(v);
+        if (u > v) swap(u, v);
+        v = v - u;
+    } while (v);
+    return u << shift;
 }
 
 /// computes lcm(a,b)
