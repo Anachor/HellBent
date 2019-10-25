@@ -124,8 +124,10 @@ struct NTT
                 LL w = 1;
                 for (int j=0; j<len/2; j++) {
                     LL x = v[i+j], y = (w * v[i+j+len/2])%mod;
-                    v[i+j] = (x+y)%mod;
-                    v[i+j+len/2] = (x-y+mod)%mod;
+                    v[i+j] = x+y;
+                    if (v[i+j] >= mod)  v[i+j] -= mod;
+                    v[i+j+len/2] = x-y+mod;
+                    if (v[i+j+len/2] >= mod)  v[i+j+len/2] -= mod;
                     w = (w * factor)%mod;
                 }
             }
