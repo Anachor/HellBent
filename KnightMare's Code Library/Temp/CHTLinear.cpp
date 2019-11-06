@@ -42,7 +42,7 @@ struct CHT {
 
     LL query(LL x) {
         if (ptr >= M.size()) ptr = M.size()-1;
-        while (ptr < M.size()-1 && f(ptr, x) > f(ptr+1, x)) ptr++;
+        while (ptr < M.size()-1 && f(ptr, x) > f(ptr+1, x)) ptr++; /// change > to < for maximum
         return f(ptr, x);
     }
 };
