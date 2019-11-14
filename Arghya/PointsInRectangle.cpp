@@ -106,7 +106,7 @@ int main()
         }
         else{
             cntRect++ ;
-            scanf("%d %d %d %d",&rect[cntRect].x1,&rect[cntRect].y1,&rect[cntRect].x2,&rect[cntRect].y2) ;
+            scanf("%d %d %d %d",&rect[cntRect].x1, &rect[cntRect].y1, &rect[cntRect].x2, &rect[cntRect].y2) ;
             xSet.insert(rect[cntRect].x1 ) ; xSet.insert(rect[cntRect].x2 ) ;
             ySet.insert(rect[cntRect].y1 ) ; ySet.insert(rect[cntRect].y2 ) ;
         }
@@ -162,7 +162,7 @@ int main()
             cntRect++ ;
             int x1 = rect[cntRect].x1 , x2=rect[cntRect].x2 , y1=rect[cntRect].y1 , y2=rect[cntRect].y2 ;
       //      printf("%d %d %d %d\n",x1,y1,x2,y2) ;
-            ans += pt.query(x2,y2)-pt.query(x1-1,y2)-pt.query(x2,y1-1)+pt.query(x1-1,y1-1) ;
+            ans += pt.query(x2,y2)-pt.query(x1-1,y2) - pt.query(x2,y1-1)+pt.query(x1-1,y1-1) ;
             r1.add( x1,y1 ) ; r1.add( x2+1,y2+1 ) ;
             r2.add( x1,y2+1) ; r2.add(x2+1,y1) ;
         }
