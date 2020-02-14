@@ -33,17 +33,6 @@ bool miller_rabin(LL n) {
 		if(witness(v%(n-1)+1,n,u,t))return 0;
 	return 1;
 }
-LL gcd(LL u, LL v) {
-    if(!u) return v; if (!v) return u;
-    int shift = __builtin_ctzll(u | v);
-    u >>= __builtin_ctzll(u);
-    do {
-        v >>= __builtin_ctzll(v);
-        if (u > v) swap(u, v);
-        v = v - u;
-    } while (v);
-    return u << shift;
-}
 mt19937_64 rng(789621);
 //returns n if prime, else divisor of n.
 LL pollard_rho(LL n) {
