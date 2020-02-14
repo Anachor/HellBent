@@ -1,12 +1,12 @@
 vector<int> prefix_function (string s) {
-	int n = s.length(); vector<int> pi(n);
-	for (int i=1; i<n; ++i) {
-		int j = pi[i-1];
-		while(j>0 && s[i] != s[j]) j=pi[j-1];
-		if (s[i] == s[j])  ++j;
-		pi[i] = j;
-	}
-	return pi;
+  int n = s.length(); vector<int> pi(n);
+  for (int i=1; i<n; ++i) {
+  int j = pi[i-1];
+  while(j>0 && s[i] != s[j]) j=pi[j-1];
+    if (s[i] == s[j])  ++j;
+    pi[i] = j;
+  }
+  return pi;
 }
 vector<int> z_function(string s) {
   int n=s.size(),l=0,r=0;vector<int>z(n);
@@ -23,8 +23,8 @@ vector<int> z_function(string s) {
 //p[1][i]:mxlen of hlfpal arnd idx i
 VI p[2];
 void manacher(const string s) {
-	int n=s.size();p[0]=VI(n+1);p[1]=VI(n);
-	for (int z=0; z<2; z++)
+  int n=s.size();p[0]=VI(n+1);p[1]=VI(n);
+  for (int z=0; z<2; z++)
     for (int i=0, l=0, r=0; i<n; i++) {
       int t = r - i + !z;
       if (i<r) p[z][i]=min(t, p[z][l+t]);
