@@ -262,6 +262,14 @@ struct Utils {
     }
     return {a[0] + vec_a * (tr_area / quad_area)};
   }
+   ///distance from point p to segment AB
+   LD DistanceToSegment(Point p,Point A,Point B) {
+      if (A==B) return (p-A).Norm();
+      Point v1 = B-A, v2 = p-A, v3 = p - B;
+      if ((v1.DotProd(v2))<-kEps) return v2.Norm();
+      else if ((v1.DotProd(v3))>kEps ) return v3.Norm();
+      else return fabs(v1.CrossProd(v2)) / v1.Norm();
+   }
 
   static Point ProjPointToLine(Point p, Line l) { ///Tested
     Point diff = l[1] - l[0];
