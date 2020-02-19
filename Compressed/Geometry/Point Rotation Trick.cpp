@@ -1,4 +1,3 @@
-/// point rotation trick
 struct pnt{
   int x, y, idx;
   bool operator<(const pnt &p)const{

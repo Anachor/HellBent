@@ -1,10 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
-typedef long double LD;
-#define pb push_back
-#define SZ(x) ((int)(x).size())
-
 const LD EPS = 1e-9;
 const LD PI = acos(-1);
 LD Sq(LD x)     {return x * x;}
