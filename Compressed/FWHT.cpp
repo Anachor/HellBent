@@ -12,5 +12,5 @@ void FWHT(vector<LL> &p, bool inv) {
           }
       }
   }
-//XOR if(inv)for(int i=0;i<n;i++)p[i]/=n;
+///XOR if(inv)for(int i=0;i<n;i++)p[i]/=n;
 }
