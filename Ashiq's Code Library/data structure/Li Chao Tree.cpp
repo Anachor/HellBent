@@ -43,10 +43,8 @@ LL get(int cn, int b, int e, LL x){
   if(cn==-1) return MAXY;
   int m = (b + e)>>1;
   if(b==e) return val(tr[cn],x);
-  else if(x <= m)
-    return min(val(tr[cn],x),get(ch[cn][0],b,m,x));
-  else return
-        min(val(tr[cn],x),get(ch[cn][1],m+1,e,x));
+  if(x <= m) return min(val(tr[cn],x),get(ch[cn][0],b,m,x));
+  return min(val(tr[cn],x),get(ch[cn][1],m+1,e,x));
 }
 
 int main() {
