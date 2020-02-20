@@ -422,59 +422,59 @@ struct PointS {
   }
 };
 LD DistS(Point3 a, Point3 b) {
-	return atan2l(b.cross(a).Norm(), a.dot(b));
+  return atan2l(b.cross(a).Norm(), a.dot(b));
 }
 struct CircleS {
-	Point3 o; // center of circle on sphere
-	LD r; // arc len
-	LD area() const { return 2*PI*(1 - cos(r)); }
+  Point3 o; // center of circle on sphere
+  LD r; // arc len
+  LD area() const { return 2*PI*(1 - cos(r)); }
 };
 CircleS From3(Point3 a,Point3 b,Point3 c){
-	int tmp = 1; //any 3 dif pts
-	if((a-b).Norm()>(c-b).Norm()){
+  int tmp = 1; //any 3 dif pts
+  if((a-b).Norm()>(c-b).Norm()){
       swap(a,c);tmp = -tmp;
   }
-	if((b-c).Norm()>(a-c).Norm()){
+  if((b-c).Norm()>(a-c).Norm()){
       swap(a,b);tmp = -tmp;
   }
-	Point3 v=(c-b).cross(b-a);
-	v = v * (tmp / v.Norm());
-	return CircleS{v, DistS(a,v)};
+  Point3 v=(c-b).cross(b-a);
+  v = v * (tmp / v.Norm());
+  return CircleS{v, DistS(a,v)};
 }
 CircleS From2(Point3 a,Point3 b){//nei same nor opp
-	Point3 mid = (a + b) / 2;
-	mid = mid / mid.Norm();
-	return From3(a, mid, b);
+  Point3 mid = (a + b) / 2;
+  mid = mid / mid.Norm();
+  return From3(a, mid, b);
 }
 //angle at A, no two points opposite
 LD Angle(Point3 A, Point3 B, Point3 C) {
   LD a = B.dot(C), b = C.dot(A), c = A.dot(A);
-	return Acos((b-a*c)/Sqrt((1-Sq(a))*(1-Sq(c))));
+  return Acos((b-a*c)/Sqrt((1-Sq(a))*(1-Sq(c))));
 }
 // no two poins opposite
 LD TriangleArea(Point3 A, Point3 B, Point3 C) {
-	LD a = Angle(C,A,B),b = Angle(A,B,C);
-	LD c = Angle(B,C,A);
-	return a + b + c - PI;
+  LD a = Angle(C,A,B),b = Angle(A,B,C);
+  LD c = Angle(B,C,A);
+  return a + b + c - PI;
 }
 // what about c1==c2 case?
 vector<Point3>IntersectionS
                         (CircleS c1, CircleS c2) {
-	Point3 n = c2.o.cross(c1.o);
-	Point3 w = c2.o * cos(c1.r) - c1.o * cos(c2.r);
-	LD d = n.SqNorm();
+  Point3 n = c2.o.cross(c1.o);
+  Point3 w = c2.o * cos(c1.r) - c1.o * cos(c2.r);
+  LD d = n.SqNorm();
   if (d < EPS) {
     cerr<<"parallel circles?\n";
     return {};
   }
   LD a = w.SqNorm() / d; vector<Point3> res;
-	if (a >= 1 + EPS) return res;
-	Point3 u = n.cross(w) / d;
-	if (a > 1 - EPS) {
+  if (a >= 1 + EPS) return res;
+  Point3 u = n.cross(w) / d;
+  if (a > 1 - EPS) {
     res.pb(u); return res;
-	}
-	LD h = Sqrt((1 - a) / d);
-	res.pb(u + n * h);
-	res.pb(u - n * h);
-	return res;
+  }
+  LD h = Sqrt((1 - a) / d);
+  res.pb(u + n * h);
+  res.pb(u - n * h);
+  return res;
 }
