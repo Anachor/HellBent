@@ -24,7 +24,6 @@ namespace hld{
     if(sub[v]>sub[g[u][0]])swap(g[u][0],g[u][i]);
     }
   }
-
   void dfsHLD(int u){
     in[u] = ++t ;
     for(int i=0 ; i<g[u].size() ; i++){
@@ -40,13 +39,12 @@ namespace hld{
     dfsSZ(root) ; t = 0 ; nxt[root] = root ;
     depth[root] = 1 ; dfsHLD(root) ;
   }
-
   int hldQuery( int u , int v ){
     int ans = -INF ;
     while( nxt[u] != nxt[v] ){
       if(depth[nxt[u]]<depth[nxt[v]]){
     ans=max(ans,query(1,1,n,in[nxt[v]],in[v]));
-// do you thing here ( from in[v] to in[ nxt[v]])
+// do your thing here ( from in[v] to in[ nxt[v]])
         v = par[nxt[v]];
       }
       else{
@@ -65,7 +63,6 @@ namespace hld{
     ans = max( ans , query(1,1,n,in[u]+1,in[v]) );
     return ans ;
   }
-
   void hldUpdate( int u , int v , int val ){
     while( nxt[u] != nxt[v] ){
       if( depth[ nxt[u] ] < depth[ nxt[v] ] ){
