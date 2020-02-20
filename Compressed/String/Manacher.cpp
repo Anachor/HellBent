@@ -1,13 +1,3 @@
-vector<int> prefix_function (string s) {
-  int n = (int) s.length(); vector<int> pi (n);
-  for (int i=1; i<n; ++i) {
-    int j = pi[i-1];
-    while (j > 0 && s[i] != s[j]) j = pi[j-1];
-    if (s[i] == s[j])  ++j;
-    pi[i] = j;
-  }
-  return pi;
-}
 //p[0][i] = maxlen of hlf palin arnd half idx i
 //p[1][i] = maxlen of hlf palin arnd idx i,0 based
 VI p[2];
@@ -26,15 +16,4 @@ void manacher(const string s) {
 bool ispalin(int l, int r) {
   int mid = (l+r+1)/2, sz = r-l+1;
   return 2*p[sz%2][mid] + b>=sz;
-}
-vector<int> z_function(string s) {
-    int n = s.size();
-    vector<int> z(n);
-    int l = 0, r = 0;
-    for (int i=1; i<n; i++) {
-        if (i<=r)   z[i] = min(r-i+1, z[i-l]);
-        while(i+z[i]<n&&s[i+z[i]]==s[z[i]])z[i]++;
-        if (i+z[i]-1>r)   l = i, r = i+z[i]-1;
-    }
-    return z;
 }
