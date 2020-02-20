@@ -1,48 +1,36 @@
-#include <bits/stdc++.h>
-using namespace std ;
-#define maxn 500005
 int c[maxn] , d[maxn] ;
-map< int , multiset<int> > g ;
-map <int,int> vis ;
+map< int , multiset<int> > g ; map <int,int> vis ;
 void dfs1(int u){
   vis[u] = 1 ;
   for( auto v : g[u] )
     if( vis.find(v) == vis.end() ) dfs1(v) ;
 }
-///--------Euler path printing-----------///
 //just call dfs2 with the node you want to start
-//your path
-//at first you need to make sure, the graph is
-//connected and euler path exist
+//your path at first you need to make sure,
+//the graph is connected and euler path exists
 vector <int> ans ;
 void dfs2(int u){
   while( (int)g[u].size() !=0 ){
     int v = *g[u].begin() ;
-    g[u].erase( g[u].find(v) ) ;
-    g[v].erase( g[v].find(u) ) ;
-    dfs2(v) ;
+    g[u].erase(g[u].find(v));
+    g[v].erase(g[v].find(u)); dfs2(v) ;
   }
   ans.pb(u) ;
 }
-///--------Euler path printing-----------///
 int main(){
-  int n  ;
-  scanf("%d",&n) ;
+  int n; scanf("%d",&n) ;
   for(int i=1 ; i<n ; i++) scanf("%d",&c[i]) ;
   for(int i=1 ; i<n ; i++) scanf("%d",&d[i]) ;
   for(int i=1 ; i<n ; i++)  {
     if( c[i] > d[i] ){
-      printf("-1\n") ;
-      return 0 ;
+      printf("-1\n"); return 0 ;
     }
-    g[ c[i] ].insert( d[i] ) ;
-    g[ d[i] ].insert( c[i] ) ;
+    g[c[i]].insert(d[i]); g[d[i]].insert(c[i]);
   }
   int src = c[1] , cnt = 0 ;
   for( auto it : g ){
     if( (int)it.second.size() & 1 ){
-      cnt++ ;
-      src = it.first ;
+      cnt++ ; src = it.first ;
     }
   }
   dfs1( src ) ;
@@ -57,5 +45,4 @@ int main(){
     if( i == (int)ans.size() - 1 ) printf("\n") ;
     else printf(" ") ;
   }
-  return 0 ;
 }
