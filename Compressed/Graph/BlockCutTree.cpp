@@ -59,33 +59,32 @@ struct Edge{
   int u , v , id ;
 }edge[maxn];
 int main(){
-    //BCT::addEdge(u,v,i);
-    BCT::find2VCC() ;
-    int cntVcc = BCT::cnt2vcc ; int ans1 ;
-    unsigned long long int ans2 ;
-    if( cntVcc==1 ){
-      ans1 = 2 ; ans2 = (n*(n-1))/2LL ;
-    }
-    else{
-      ans1 = 0 , ans2=1LL ;
-      for(i=1; i<=cntVcc ; i++){
-        set <int> nodes ;
-        for(j=0 ; j<BCT::biComp[i].size() ; j++){
-          int id= BCT::biComp[i][j] ;
-          nodes.insert(edge[id].u);
-          nodes.insert(edge[id].v);
-        }
-        set<int> :: iterator it = nodes.begin() ;
-        int artCnt = 0 ;
-        while( it!=nodes.end() ){
-          if( BCT::isCutPoint[*it] ) artCnt++ ;
-          it++ ;
-        }
-        if( artCnt==1 ){
-          ans1++ ;
-          ans2 *= (1LL*(nodes.size() - artCnt )) ;
-        }
+  //BCT::addEdge(u,v,i);
+  BCT::find2VCC() ;
+  int cntVcc = BCT::cnt2vcc ; int ans1 ;
+  unsigned long long int ans2 ;
+  if( cntVcc==1 ){
+    ans1 = 2 ; ans2 = (n*(n-1))/2LL ;
+  }
+  else{
+    ans1 = 0 , ans2=1LL ;
+    for(i=1; i<=cntVcc ; i++){
+      set <int> nodes ;
+      for(j=0 ; j<BCT::biComp[i].size() ; j++){
+        int id= BCT::biComp[i][j] ;
+        nodes.insert(edge[id].u);
+        nodes.insert(edge[id].v);
+      }
+      set<int> :: iterator it = nodes.begin() ;
+      int artCnt = 0 ;
+      while( it!=nodes.end() ){
+        if( BCT::isCutPoint[*it] ) artCnt++ ;
+        it++ ;
+      }
+      if( artCnt==1 ){
+        ans1++ ;
+        ans2 *= (1LL*(nodes.size() - artCnt )) ;
       }
     }
-  return 0 ;
+  }
 }
