@@ -1,0 +1,115 @@
+\documentclass[${fontSize},${paper},landscape,twosided]{extarticle}
+
+\title{Team notebook}
+\author{${author}}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{listings}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{geometry}
+\usepackage{multicol}
+\usepackage{graphicx}
+\geometry{verbose,landscape,${paper},tmargin=0.5cm,bmargin=0.5cm,lmargin=0.5cm,rmargin=0.5cm, includehead}
+\setlength{\headsep}{0.0cm}
+\geometry{footskip=0cm}
+
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+%% Golang definition for listings
+%% http://github.io/julienc91/lstlistings-golang
+%%
+\lstdefinelanguage{Golang}%
+  {morekeywords=[1]{package,import,func,type,struct,return,defer,panic,%
+     recover,select,var,const,iota,},%
+   morekeywords=[2]{string,uint,uint8,uint16,uint32,uint64,int,int8,int16,%
+     int32,int64,bool,float32,float64,complex64,complex128,byte,rune,uintptr,%
+     error,interface},%
+   morekeywords=[3]{map,slice,make,new,nil,len,cap,copy,close,true,false,%
+     delete,append,real,imag,complex,chan,},%
+   morekeywords=[4]{for,break,continue,range,go,goto,switch,case,fallthrough,if,%
+     else,default,},%
+   morekeywords=[5]{Println,Printf,Error,Print,},%
+   sensitive=true,%
+   morecomment=[l]{//},%
+   morecomment=[s]{/*}{*/},%
+   morestring=[b]',%
+   morestring=[b]",%
+   morestring=[s]{`}{`},%
+   }
+
+
+\lstset{frame=tb,
+  language=C++,
+  aboveskip=1mm,
+  belowskip=0mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=2
+}
+
+\usepackage{titlesec}
+
+\titleformat*{\subsection}{\large\bfseries}
+\titleformat*{\subsubsection}{\large\bfseries}
+
+\titlespacing*{\section}
+{0pt}{0ex}{0ex}
+\titlespacing*{\subsection}
+{0pt}{0ex}{0ex}
+\titlespacing*{\subsubsection}
+{0pt}{0ex}{0ex}
+
+\setlength{\columnsep}{0.05in}
+\setlength{\columnseprule}{1px}
+
+\makeatletter
+\let\rauthor\@author
+\makeatother
+\usepackage{fancyhdr}
+\fancyhf{}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{1pt}
+\fancyhead[R]{\thepage} %prints the page number on the right side of the header
+\fancyhead[L]{\rauthor}%
+
+\fancyfoot{}
+\renewcommand{\footrulewidth}{0pt}}
+
+\fancypagestyle{plain}{%
+    \renewcommand{\headrulewidth}{0pt}%
+    \renewcommand{\footrulewidth}{0pt}}
+    \fancyhf{}%
+    \fancyhead[R]{\thepage}%
+    \fancyhead[L]{\textbf{\rauthor}}%
+}
+
+\begin{document}
+\date{}
+\maketitle
+\begin{multicols}{${columns}}
+${image}
+\renewcommand{\baselinestretch}{0.0}
+\tableofcontents
+\renewcommand{\baselinestretch}{0.5}
+\lstloadlanguages{C++,Java}
+
+
+
