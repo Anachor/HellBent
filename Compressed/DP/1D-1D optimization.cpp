@@ -1,12 +1,7 @@
 //Batch Scheduling
-#include <bits/stdc++.h>
-using namespace std ;
-#define maxn 1000005
-int dp[maxn] ;
-int t[maxn] , f[maxn] ;
-int n , s ;
-int w( int i, int x ){
-  return ( t[x]-t[i]+s )*( f[n]-f[i] ) ;
+int dp[maxn],t[maxn],f[maxn],n,s;
+int w(int i,int x){
+  return(t[x]-t[i]+s)*(f[n]-f[i]);
 }
 int main(){
   scanf("%d %d",&n,&s) ;
@@ -31,7 +26,7 @@ int main(){
     else{
       int lo = max(vp.back().xx,x+1),hi=n;
       if(lo>hi||dp[vp.back().yy]+
-    w(vp.back().yy,hi)<=dp[x]+w(x,hi))continue ;
+        w(vp.back().yy,hi)<=dp[x]+w(x,hi))continue;
       while( lo < hi ){
         int mid = (lo+hi)/2 ;
         if( dp[vp.back().yy]+w(vp.back().yy,mid)<=
@@ -41,6 +36,5 @@ int main(){
       vp.pb( mp( lo , x ) ) ;
     }
   }
-  printf("%d\n",dp[n]) ;
-  return 0 ;
+  printf("%d\n",dp[n]);
 }
