@@ -14,3 +14,12 @@ void FWHT(vector<LL> &p, bool inv) {
   }
 ///XOR if(inv)for(int i=0;i<n;i++)p[i]/=n;
 }
+vector<LL> convo(vector<LL> a, vector<LL> b) {
+  int n = 1, sz = max(a.size(), b.size());
+  while(n<sz) n*=2;
+  a.resize(n); b.resize(n); vector<LL>res(n, 0);
+  FWHT(a, 0); FWHT(b, 0);
+  for(int i=0;i<n;i++)  res[i] = a[i] * b[i];
+  FWHT(res, 1);
+  return res;
+}
