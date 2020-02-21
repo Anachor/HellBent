@@ -1,0 +1,31 @@
+\paragraph{Finding an arbitrary flow} Consider flow networks, 
+where we additionally require the flow of each edge to have
+a certain amount, i.e. we bound the flow from below by 
+a \textbf{demand} function $d(e)$:
+$$ d(e) \le f(e) \le c(e)$$
+So next each edge has a minimal flow value, that we have to pass along the edge.
+
+We make the following changes in the network.
+We add a new source $s'$ and a new sink $t'$, a new edge from the source $s'$ to every other vertex, a new edge for every vertex to the sink $t'$, and one edge from $t$ to $s$.
+Additionally we define the new capacity function $c'$ as:
+
+\begin{itemize}
+    \item $c'((s', v)) = \sum_{u \in V} d((u, v))$ for each edge $(s', v)$.
+    \item $c'((v, t')) = \sum_{w \in V} d((v, w))$ for each edge $(v, t')$.
+    \item $c'((u, v)) = c((u, v)) - d((u, v))$ for each edge $(u, v)$ in the old network.
+    \item $c'((t, s)) = \infty$
+
+\end{itemize}
+
+If the new network has a saturating flow (a flow where each edge outgoing from $s'$ is completely filled, which is equivalent to every edge incoming to $t'$ is completely filled), then the network with demands has a valid flow, and the actual flow can be easily reconstructed from the new network.
+Otherwise there doesn't exist a flow that satisfies all conditions.
+Since a saturating flow has to be a maximum flow, it can be found by any maximum flow algorithm.
+
+\paragraph{Minimal flow}
+Note that along the edge $(t, s)$ (from the old sink to the old source) with the capacity $\infty$ flows the entire flow of the corresponding old network.
+I.e. the capacity of this edge effects the flow value of the old network.
+By giving this edge a sufficient large capacity (i.e. $\infty$), the flow of the old network is unlimited.
+By limiting this edge by smaller capacities, the flow value will decrease.
+However if we limit this edge by a too small value, than the network will not have a saturated solution, e.g. the corresponding solution for the original network will not satisfy the demand of the edges.
+Obviously here can use a binary search to find the lowest value with which all constraints are still satisfied.
+This gives the minimal flow of the original network.
