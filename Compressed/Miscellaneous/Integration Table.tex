@@ -1,0 +1,718 @@
+%&LaTeX
+\documentclass[12pt,letterpaper,leqno]{article}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{html}
+\date{\today} % delete this line to display the current date                                                                                             
+\usepackage{hyperref}
+\hypersetup{
+    pdftitle={Integral Table from http://integral-table.com},    % title
+    pdfauthor={Shapiro},     % author
+    pdfsubject={Table of Integrals},   % subject of the document
+    pdfcreator={pdftex},   % creator of the document
+    pdfproducer={Texmaker}, % producer of the document
+    pdfkeywords={CSUN, Integrals, Table of Integrals, Math 280, Math 351, Differential Equations}, % list of keywords
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links
+    citecolor=red,        % color of links to bibliography
+    filecolor=red,      % color of file links
+    urlcolor=red           % color of external links
+}
+
+
+\bodytext{bgcolor="lightgray"}
+\begin{document}
+
+
+\section*{\centerline{Table of Basic Integrals}}
+
+
+
+\section*{Basic Forms}
+
+
+\begin{equation}
+\int x^n dx = \frac{1}{n+1}x^{n+1},\hspace{1ex}n\neq -1
+\end{equation}
+
+\begin{equation}
+\int \frac{1}{x}dx = \ln |x|
+\end{equation}
+
+\begin{equation}
+\int u dv = uv - \int v du
+\end{equation}
+
+\begin{equation}
+\int \frac{1}{ax+b}dx = \frac{1}{a} \ln |ax + b| 
+\end{equation}
+
+\section* {Integrals of Rational Functions}
+
+\begin{equation}
+\int \frac{1}{(x+a)^2}dx = -\frac{1}{x+a}
+\end{equation}
+
+\begin{equation}
+\int (x+a)^n dx = \frac{(x+a)^{n+1}}{n+1}, n\ne -1
+\end{equation}
+
+\begin{equation}
+\int x(x+a)^n dx = \frac{(x+a)^{n+1} ( (n+1)x-a)}{(n+1)(n+2)}
+\end{equation}
+
+\begin{equation}
+\int \frac{1}{1+x^2}dx = \tan^{-1}x
+\end{equation}
+
+\begin{equation}
+\int \frac{1}{a^2+x^2}dx = \frac{1}{a}\tan^{-1}\frac{x}{a}
+\end{equation}
+
+\begin{equation}
+\int \frac{x}{a^2+x^2}dx = \frac{1}{2}\ln|a^2+x^2|
+\end{equation}
+
+\begin{equation}
+\int \frac{x^2}{a^2+x^2}dx = x-a\tan^{-1}\frac{x}{a}
+\end{equation}
+
+\begin{equation}
+\int \frac{x^3}{a^2+x^2}dx = \frac{1}{2}x^2-\frac{1}{2}a^2\ln|a^2+x^2|
+\end{equation}
+
+\begin{equation}
+\int \frac{1}{ax^2+bx+c}dx = \frac{2}{\sqrt{4ac-b^2}}\tan^{-1}\frac{2ax+b}{\sqrt{4ac-b^2}}
+\end{equation}
+
+\begin{equation}
+\int \frac{1}{(x+a)(x+b)}dx = \frac{1}{b-a}\ln\frac{a+x}{b+x}, \text{ } a\ne b
+\end{equation}
+
+\begin{equation}
+\int \frac{x}{(x+a)^2}dx = \frac{a}{a+x}+\ln |a+x|
+\end{equation}
+
+
+\begin{equation}
+\int \frac{x}{ax^2+bx+c}dx = \frac{1}{2a}\ln|ax^2+bx+c| 
+-\frac{b}{a\sqrt{4ac-b^2}}\tan^{-1}\frac{2ax+b}{\sqrt{4ac-b^2}}
+\end{equation}
+
+\section*{Integrals with Roots}
+
+\begin{equation}
+\int \sqrt{x-a}\ dx = \frac{2}{3}(x-a)^{3/2}
+\end{equation}
+
+
+
+\begin{equation}
+\int \frac{1}{\sqrt{x\pm a}}\ dx = 2\sqrt{x\pm a} 
+\end{equation}
+
+\begin{equation}\label{eq:Rigo}
+\int \frac{1}{\sqrt{a-x}}\ dx = -2\sqrt{a-x} 
+\end{equation}
+
+
+\begin{equation}\label{eq:Gilmore}
+\int x\sqrt{x-a}\ dx =  
+\left\{
+\begin{array}{l}
+\frac{2 a}{3} \left({x-a}\right)^{3/2} +\frac{2 }{5}\left( {x-a}\right)^{5/2},\text{ or} 
+\\ \frac{2}{3} x(x-a)^{3/2} - \frac{4}{15} (x-a)^{5/2}, \text{ or}
+\\ \frac{2}{15}(2a+3x)(x-a)^{3/2}
+\end{array}
+\right.
+\end{equation}
+
+\begin{equation}
+\int \sqrt{ax+b}\ dx = \left(\frac{2b}{3a}+\frac{2x}{3}\right)\sqrt{ax+b} 
+\end{equation}
+
+\begin{equation}
+\int (ax+b)^{3/2}\ dx =\frac{2}{5a}(ax+b)^{5/2}
+\end{equation}
+
+\begin{equation}\label{eq:Weems}
+\int \frac{x}{\sqrt{x\pm a} } \ dx = \frac{2}{3}(x\mp 2a)\sqrt{x\pm a}
+\end{equation}
+
+\begin{equation}
+\int \sqrt{\frac{x}{a-x}}\ dx =  -\sqrt{x(a-x)}
+-a\tan^{-1}\frac{\sqrt{x(a-x)}}{x-a}
+\end{equation}
+
+\begin{equation}
+\int \sqrt{\frac{x}{a+x}}\ dx =  \sqrt{x(a+x)} 
+-a\ln \left [ \sqrt{x} + \sqrt{x+a}\right] 
+\end{equation}
+
+\begin{equation}
+\int x \sqrt{ax + b}\ dx =
+\frac{2}{15 a^2}(-2b^2+abx + 3 a^2 x^2)
+\sqrt{ax+b}
+\end{equation}
+
+\begin{equation}
+\int \sqrt{x(ax+b)}\ dx = \frac{1}{4a^{3/2}}\left[(2ax + b)\sqrt{ax(ax+b)} 
+-b^2 \ln \left| a\sqrt{x} + \sqrt{a(ax+b)} \right| \right ] 
+\end{equation}
+
+\begin{equation}
+\int \sqrt{x^3(ax+b)} \ dx =\left [ 
+\frac{b}{12a}-
+\frac{b^2}{8a^2x}+
+\frac{x}{3}\right] 
+\sqrt{x^3(ax+b)}  + 
+\frac{b^3}{8a^{5/2}}\ln \left | a\sqrt{x} + \sqrt{a(ax+b)} \right |
+\end{equation}
+
+\begin{equation}
+\int\sqrt{x^2 \pm a^2}\ dx = \frac{1}{2}x\sqrt{x^2\pm a^2} 
+\pm\frac{1}{2}a^2 \ln \left | x + \sqrt{x^2\pm a^2} \right | 
+\end{equation}
+
+\begin{equation}
+\int  \sqrt{a^2 - x^2}\ dx = \frac{1}{2} x \sqrt{a^2-x^2} 
++\frac{1}{2}a^2\tan^{-1}\frac{x}{\sqrt{a^2-x^2}}
+\end{equation}
+
+\begin{equation}
+\int  x \sqrt{x^2 \pm a^2}\ dx= \frac{1}{3}\left ( x^2 \pm a^2 \right)^{3/2} 
+\end{equation}
+
+\begin{equation}
+\int \frac{1}{\sqrt{x^2 \pm a^2}}\ dx = \ln \left | x + \sqrt{x^2 \pm a^2} \right | 
+\end{equation}
+
+\begin{equation}
+\int \frac{1}{\sqrt{a^2 - x^2}}\ dx = \sin^{-1}\frac{x}{a} 
+\end{equation}
+
+\begin{equation}
+\int \frac{x}{\sqrt{x^2\pm a^2}}\ dx = \sqrt{x^2 \pm a^2} 
+\end{equation}
+
+\begin{equation}
+\int \frac{x}{\sqrt{a^2-x^2}}\ dx = -\sqrt{a^2-x^2} 
+\end{equation}
+
+\begin{equation}\label{eq:Russ}
+\int \frac{x^2}{\sqrt{x^2 \pm a^2}}\ dx = \frac{1}{2}x\sqrt{x^2 \pm a^2}
+\mp \frac{1}{2}a^2 \ln \left| x + \sqrt{x^2\pm a^2} \right | 
+\end{equation}
+
+\begin{equation}\label{eq:Winokur1}
+\int \sqrt{a x^2 + b x + c}\ dx = 
+\frac{b+2ax}{4a}\sqrt{ax^2+bx+c}
++
+\frac{4ac-b^2}{8a^{3/2}}\ln \left| 2ax + b + 2\sqrt{a(ax^2+bx^+c)}\right |
+\end{equation}
+
+\begin{equation}\label{eq:Larry-Morris}\begin{split}
+\int &x \sqrt{a x^2 + bx + c}\ dx = \frac{1}{48a^{5/2}}\left ( 
+2 \sqrt{a} \sqrt{ax^2+bx+c}
+\right .  
+  \left( - 3b^2 + 2 abx + 8 a(c+ax^2) \right)
+\\ &  \left.
+ + 3(b^3-4abc)\ln \left|b + 2ax + 2\sqrt{a}\sqrt{ax^2+bx+c} \right| \right)
+ \end{split}
+\end{equation}
+
+\begin{equation}
+\int\frac{1}{\sqrt{ax^2+bx+c}}\ dx=
+\frac{1}{\sqrt{a}}\ln \left| 2ax+b + 2 \sqrt{a(ax^2+bx+c)} \right | 
+\end{equation}
+
+\begin{equation}\label{eq:Duley}
+\int \frac{x}{\sqrt{ax^2+bx+c}}\ dx=
+\frac{1}{a}\sqrt{ax^2+bx + c} 
+-
+\frac{b}{2a^{3/2}}\ln \left| 2ax+b + 2 \sqrt{a(ax^2+bx+c)} \right |
+\end{equation}
+
+\begin{equation}\label{eq:Winokur2}
+\int\frac{dx}{(a^2+x^2)^{3/2}}=\frac{x}{a^2\sqrt{a^2+x^2}}
+\end{equation}
+
+
+
+\section*{Integrals with Logarithms}
+
+\begin{equation}
+\int \ln ax\  dx = x \ln ax - x 
+\end{equation}
+
+\begin{equation}
+\int x \ln x \ dx = \frac{1}{2} x^2 \ln x-\frac{x^2}{4}
+\end{equation}
+
+\begin{equation}
+\int x^2 \ln x \ dx = \frac{1}{3} x^3 \ln x-\frac{x^3}{9}
+\end{equation}
+
+\begin{equation}
+\int x^n \ln x\ dx = x^{n+1}\left( \dfrac{\ln x}{n+1}-\dfrac{1}{(n+1)^2}\right),\hspace{2ex} n\neq -1
+\end{equation}
+
+
+\begin{equation}
+\int \frac{\ln ax}{x}\ dx = \frac{1}{2}\left ( \ln ax \right)^2 
+\end{equation}
+
+\begin{equation}
+\int \frac{\ln x}{x^2}\ dx = -\frac{1}{x}-\frac{\ln x}{x}
+\end{equation}
+
+\begin{equation}
+\int \ln (ax + b) \ dx = \left ( x + \frac{b}{a} \right) \ln (ax+b) - x , a\ne 0
+\end{equation}
+
+\begin{equation}
+\int \ln  ( x^2 + a^2 )\hspace{.5ex} {dx} = x \ln (x^2 + a^2  ) +2a\tan^{-1} \frac{x}{a} - 2x 
+\end{equation}
+
+\begin{equation}
+\int \ln  ( x^2 - a^2 )\hspace{.5ex} {dx} = x \ln (x^2 - a^2  ) +a\ln \frac{x+a}{x-a} - 2x 
+\end{equation}
+
+\begin{equation}
+\int \ln \left ( ax^2 + bx + c\right) \ dx  = \frac{1}{a}\sqrt{4ac-b^2}\tan^{-1}\frac{2ax+b}{\sqrt{4ac-b^2}}
+-2x + \left( \frac{b}{2a}+x \right )\ln \left (ax^2+bx+c \right) 
+\end{equation}
+
+\begin{equation}
+\int x \ln (ax + b)\ dx = \frac{bx}{2a}-\frac{1}{4}x^2 
++\frac{1}{2}\left(x^2-\frac{b^2}{a^2}\right)\ln (ax+b) 
+\end{equation}
+
+\begin{equation}
+\int x \ln \left ( a^2 - b^2 x^2 \right )\ dx = -\frac{1}{2}x^2+ 
+\frac{1}{2}\left( x^2 - \frac{a^2}{b^2} \right ) \ln \left (a^2 -b^2 x^2 \right) 
+\end{equation}
+
+\begin{equation}
+\int (\ln x)^2\ dx = 2x - 2x \ln x + x (\ln x)^2
+\end{equation}
+
+
+\begin{equation}
+\int (\ln x)^3\ dx = -6 x+x (\ln x)^3-3 x (\ln x)^2+6 x \ln x
+\end{equation}
+ 
+ 
+\begin{equation}
+\int x (\ln x)^2\ dx = \frac{x^2}{4}+\frac{1}{2} x^2 (\ln x)^2-\frac{1}{2} x^2 \ln x
+\end{equation}
+
+\begin{equation}
+\int x^2 (\ln x)^2\ dx = \frac{2 x^3}{27}+\frac{1}{3} x^3 (\ln x)^2-\frac{2}{9} x^3 \ln x
+\end{equation}
+ 
+ 
+ \section*{Integrals with Exponentials}
+
+\begin{equation}
+\int e^{ax}\ dx = \frac{1}{a}e^{ax} 
+\end{equation}
+
+\begin{equation}\label{eq:ajoy}
+\int \sqrt{x} e^{ax}\ dx = \frac{1}{a}\sqrt{x}e^{ax} 
++\frac{i\sqrt{\pi}}{2a^{3/2}}
+\text{erf}\left(i\sqrt{ax}\right),
+\text{ where erf}(x)=\frac{2}{\sqrt{\pi}}\int_0^x e^{-t^2}dt
+\end{equation}
+
+\begin{equation}
+\int x e^x\ dx = (x-1) e^x 
+\end{equation}
+
+\begin{equation}
+\int x e^{ax}\ dx = \left(\frac{x}{a}-\frac{1}{a^2}\right) e^{ax} 
+\end{equation}
+
+\begin{equation}
+\int x^2 e^{x}\ dx = \left(x^2 - 2x + 2\right) e^{x}
+\end{equation}
+
+\begin{equation}
+\int x^2 e^{ax}\ dx = \left(\frac{x^2}{a}-\frac{2x}{a^2}+\frac{2}{a^3}\right) e^{ax} 
+\end{equation}
+
+\begin{equation}
+\int x^3 e^{x}\ dx = \left(x^3-3x^2 + 6x - 6\right) e^{x} 
+\end{equation}
+ 
+\begin{equation}\label{eq:swift1}
+\int x^n e^{ax}\ dx = \dfrac{x^n e^{ax}}{a} - 
+\dfrac{n}{a}\int x^{n-1}e^{ax}\hspace{1pt}\text{d}x
+\end{equation} 
+ 
+\begin{equation}\label{eq:ebke}
+\int x^n e^{ax}\ dx = \frac{(-1)^n}{a^{n+1}}\Gamma[1+n,-ax], 
+ \text{ where } \Gamma(a,x)=\int_x^{\infty} t^{a-1}e^{-t}\hspace{2pt}\text{d}t
+ \end{equation}
+
+\begin{equation}\label{eq:swift2}
+\int e^{ax^2}\ dx = -\frac{i\sqrt{\pi}}{2\sqrt{a}}\text{erf}\left(ix\sqrt{a}\right) 
+\end{equation}
+
+\begin{equation}\label{eq:swift3}
+\int e^{-ax^2}\ dx = \frac{\sqrt{\pi}}{2\sqrt{a}}\text{erf}\left(x\sqrt{a}\right) 
+\end{equation}
+
+\begin{equation}\label{eq:qarles1}
+\int x e^{-ax^2}\ {dx} = -\dfrac{1}{2a}e^{-ax^2} 
+\end{equation}
+
+\begin{equation}\label{eq:qarles2}
+\int x^2 e^{-ax^2}\ {dx} = \dfrac{1}{4}\sqrt{\dfrac{\pi}{a^3}}\text{erf}(x\sqrt{a}) -\dfrac{x}{2a}e^{-ax^2}
+\end{equation}
+
+
+\section* {Integrals with Trigonometric Functions}
+
+\begin{equation}
+\int \sin ax \ dx = -\frac{1}{a} \cos ax 
+\end{equation}
+
+\begin{equation}
+\int \sin^2 ax\  dx = \frac{x}{2} - \frac{\sin 2ax} {4a} 
+\end{equation}
+
+\begin{equation}
+\int \sin^3 ax \ dx = -\frac{3 \cos ax}{4a} + \frac{\cos 3ax} {12a} 
+\end{equation}
+
+\begin{equation}
+\int \sin^n ax \ dx =
+ -\frac{1}{a}{\cos ax} \hspace{2mm}{_2F_1}\left[
+\frac{1}{2}, \frac{1-n}{2}, \frac{3}{2}, \cos^2 ax
+\right] 
+\end{equation}
+
+
+
+\begin{equation}
+\int \cos ax\ dx= \frac{1}{a} \sin ax 
+\end{equation}
+
+\begin{equation}
+\int \cos^2 ax\ dx = \frac{x}{2}+\frac{ \sin 2ax}{4a} 
+\end{equation}
+
+\begin{equation}
+\int \cos^3 ax dx = \frac{3 \sin ax}{4a}+\frac{ \sin 3ax}{12a} 
+\end{equation}
+
+\begin{equation}
+\int \cos^p ax dx  = -\frac{1}{a(1+p)}{\cos^{1+p} ax} \times 
+{_2F_1}\left[
+\frac{1+p}{2}, \frac{1}{2}, \frac{3+p}{2}, \cos^2 ax
+\right] 
+\end{equation}
+
+\begin{equation}\label{eq:veky}
+\int \cos x \sin x\ dx = \frac{1}{2}\sin^2 x + c_1 = -\frac{1}{2} \cos^2x + c_2 = -\frac{1}{4} \cos 2x + c_3
+\end{equation}
+
+\begin{equation}
+\int \cos ax \sin bx\ dx = \frac{\cos[(a-b) x]}{2(a-b)} -
+ \frac{\cos[(a+b)x]}{2(a+b)} , a\ne b
+\end{equation}
+
+\begin{equation}
+\int \sin^2 ax \cos bx\ dx = 
+-\frac{\sin[(2a-b)x]}{4(2a-b)} 
++ \frac{\sin bx}{2b} 
+- \frac{\sin[(2a+b)x]}{4(2a+b)}
+\end{equation}
+
+\begin{equation}
+\int \sin^2 x \cos x\ dx = \frac{1}{3} \sin^3 x
+\end{equation}
+
+\begin{equation}
+\int \cos^2 ax \sin bx\ dx = \frac{\cos[(2a-b)x]}{4(2a-b)} 
+- \frac{\cos bx}{2b}
+ - \frac{\cos[(2a+b)x]}{4(2a+b)}
+\end{equation}
+
+\begin{equation}
+\int \cos^2 ax \sin ax\ dx = -\frac{1}{3a}\cos^3{ax} 
+\end{equation}
+
+\begin{equation}
+\int \sin^2 ax \cos^2 bx dx = \frac{x}{4}
+-\frac{\sin 2ax}{8a}-
+\frac{\sin[2(a-b)x]}{16(a-b)}
++\frac{\sin 2bx}{8b}-
+\frac{\sin[2(a+b)x]}{16(a+b)}
+\end{equation}
+
+\begin{equation}
+\int \sin^2 ax \cos^2 ax\ dx = \frac{x}{8}-\frac{\sin 4ax}{32a}
+\end{equation}
+
+\begin{equation}
+\int \tan ax\ dx = -\frac{1}{a} \ln \cos ax 
+\end{equation}
+
+\begin{equation}
+\int \tan^2 ax\ dx = -x + \frac{1}{a} \tan ax 
+\end{equation}
+
+\begin{equation}
+\int \tan^n ax\ dx = 
+\frac{\tan^{n+1} ax }{a(1+n)} \times
+ {_2}F_1\left( \frac{n+1}{2}, 
+1, \frac{n+3}{2}, -\tan^2 ax \right) 
+\end{equation}
+
+\begin{equation}
+\int \tan^3 ax dx = \frac{1}{a} \ln \cos ax + \frac{1}{2a}\sec^2 ax 
+\end{equation}
+
+\begin{equation}
+\int \sec x \ dx = \ln | \sec x + \tan x | = 2 \tanh^{-1} \left (\tan \frac{x}{2} \right) 
+\end{equation}
+
+\begin{equation}
+\int \sec^2 ax\ dx = \frac{1}{a} \tan ax 
+\end{equation}
+
+\begin{equation}\label{eq:Kloeppel}
+\int \sec^3 x \ {dx} = \frac{1}{2} \sec x \tan x + \frac{1}{2}\ln | \sec x + \tan x |
+\end{equation}
+
+\begin{equation}
+\int \sec x \tan x\ dx = \sec x 
+\end{equation}
+
+\begin{equation}
+\int \sec^2 x \tan x\ dx = \frac{1}{2} \sec^2 x 
+\end{equation}
+
+\begin{equation}
+\int \sec^n x \tan x \ dx = \frac{1}{n} \sec^n x , n\ne 0
+\end{equation}
+
+\begin{equation}
+\int \csc x\ dx = \ln \left | \tan \frac{x}{2} \right|  = \ln | \csc x - \cot x| + C
+\end{equation}
+
+\begin{equation}
+\int \csc^2 ax\ dx = -\frac{1}{a} \cot ax 
+\end{equation}
+
+\begin{equation}
+\int \csc^3 x\ dx = -\frac{1}{2}\cot x \csc x + \frac{1}{2} \ln | \csc x - \cot x | 
+\end{equation}
+
+\begin{equation}
+\int \csc^nx \cot x\ dx = -\frac{1}{n}\csc^n x, n\ne 0
+\end{equation}
+
+\begin{equation}
+\int \sec x \csc x \ dx = \ln | \tan x | 
+\end{equation}
+
+
+\section*{Products of Trigonometric Functions and Monomials}
+
+\begin{equation}
+\int x \cos x \ dx = \cos x + x \sin x 
+\end{equation}
+
+\begin{equation}
+\int x \cos ax \ dx = \frac{1}{a^2} \cos ax + \frac{x}{a} \sin ax 
+\end{equation}
+
+\begin{equation}
+\int x^2 \cos x \ dx = 2 x \cos x + \left ( x^2 - 2 \right ) \sin x 
+\end{equation}
+
+\begin{equation}
+\int x^2 \cos ax \ dx = \frac{2 x \cos ax }{a^2} + \frac{ a^2 x^2 - 2  }{a^3} \sin ax 
+\end{equation}
+
+\begin{equation}
+\int  x^n \cos x dx = 
+-\frac{1}{2}(i)^{n+1}\left [ \Gamma(n+1, -ix) 
+% \right . \nonumber \\ & \left .
++ (-1)^n \Gamma(n+1, ix)\right] 
+\end{equation}
+
+\begin{equation}
+\int x^n \cos ax \ dx =
+ \frac{1}{2}(ia)^{1-n}\left [ (-1)^n  \Gamma(n+1, -iax) 
+% \right. \nonumber \\ & \left.
+ -\Gamma(n+1, ixa)\right] 
+\end{equation}
+
+\begin{equation}
+\int x \sin x\ dx = -x \cos x + \sin x 
+\end{equation}
+
+\begin{equation}
+\int x \sin ax\ dx = -\frac{x \cos ax}{a} + \frac{\sin ax}{a^2} 
+\end{equation}
+
+\begin{equation}
+\int x^2 \sin x\ dx = \left(2-x^2\right) \cos x + 2 x \sin x
+\end{equation}
+
+\begin{equation}
+\int x^2 \sin ax\ dx =\frac{2-a^2x^2}{a^3}\cos ax +\frac{ 2 x \sin ax}{a^2} 
+\end{equation}
+
+\begin{equation}\label{eq:xul}
+\int x^n \sin x \ dx = -\frac{1}{2}(i)^n\left[ \Gamma(n+1, -ix) 
+%\right. \nonumber \\ & \left.
+ - (-1)^n\Gamma(n+1, -ix)\right] 
+\end{equation}
+
+\begin{equation}
+\int x \cos^2 x \ dx = \frac{x^2}{4}+\frac{1}{8}\cos 2x + \frac{1}{4} x \sin 2x
+\end{equation}
+
+\begin{equation}
+\int x \sin^2 x \ dx = \frac{x^2}{4}-\frac{1}{8}\cos 2x - \frac{1}{4} x \sin 2x
+\end{equation}
+
+\begin{equation}
+\int x \tan^2 x \ dx = -\frac{x^2}{2} + \ln \cos x + x \tan x
+\end{equation}
+
+\begin{equation}
+\int x \sec^2 x \ dx = \ln \cos x + x \tan x
+\end{equation}
+ 
+\section*{Products of Trigonometric Functions and Exponentials}
+
+\begin{equation}
+\int e^x \sin x \ dx = \frac{1}{2}e^x (\sin x - \cos x) 
+\end{equation}
+
+\begin{equation}\label{eq:ritzert}
+\int e^{bx} \sin ax\ dx = \frac{1}{a^2+b^2}e^{bx} (b\sin ax - a\cos ax) 
+\end{equation}
+
+\begin{equation}
+\int e^x \cos x\ dx = \frac{1}{2}e^x (\sin x + \cos x)  
+\end{equation}
+
+\begin{equation}
+\int e^{bx} \cos ax\ dx = \frac{1}{a^2 + b^2} e^{bx} ( a \sin ax + b \cos ax ) 
+\end{equation}
+
+\begin{equation}
+\int x e^x \sin x\ dx = \frac{1}{2}e^x (\cos x - x \cos x + x \sin x) 
+\end{equation}
+
+\begin{equation}
+\int x e^x \cos x\ dx = \frac{1}{2}e^x (x \cos x 
+- \sin x + x \sin x) 
+\end{equation}
+
+ \section*{Integrals of Hyperbolic Functions}
+
+\begin{equation}
+\int \cosh ax\ dx =\frac{1}{a} \sinh ax 
+\end{equation}
+
+\begin{equation}
+\int e^{ax}  \cosh bx \ dx = 
+\begin{cases}
+\displaystyle{\frac{e^{ax}}{a^2-b^2} }[ a \cosh bx - b \sinh bx ]  & a\ne b \\
+\displaystyle{\frac{e^{2ax}}{4a} + \frac{x}{2}}  & a = b
+\end{cases}
+\end{equation}
+
+\begin{equation}
+\int \sinh ax\ dx = \frac{1}{a} \cosh ax 
+\end{equation}
+
+\begin{equation}
+\int e^{ax} \sinh bx \ dx =
+\begin{cases}
+\displaystyle{\frac{e^{ax}}{a^2-b^2} }[ -b \cosh bx + a \sinh bx ]  & a\ne b \\
+\displaystyle{\frac{e^{2ax}}{4a} - \frac{x}{2}}  & a = b
+\end{cases}
+\end{equation}
+
+
+\begin{equation}\label{eq:yates}
+\int  \tanh ax\hspace{1.5pt} dx =\frac{1}{a} \ln \cosh ax 
+\end{equation}
+
+\begin{equation}\label{eq:dewitt}
+\int  e^{ax} \tanh bx\ dx = 
+\begin{cases}
+\displaystyle{ \frac{ e^{(a+2b)x}}{(a+2b)} 
+{_2F_1}\left[ 1+\frac{a}{2b},1,2+\frac{a}{2b}, -e^{2bx}\right] }& \\
+\displaystyle{
+\hspace{1cm}-\frac{1}{a}e^{ax}{_2F_1}\left[ 1, \frac{a}{2b},1+\frac{a}{2b}, -e^{2bx}\right]
+}
+ & a\ne b \\
+\displaystyle{\frac{e^{ax}-2\tan^{-1}[e^{ax}]}{a} } & a = b
+\end{cases}
+\end{equation}
+
+
+
+\begin{equation}
+\int \cos ax \cosh bx\ dx = 
+\frac{1}{a^2 + b^2} \left[
+a \sin ax \cosh bx  + b \cos ax \sinh bx
+\right] 
+\end{equation}
+
+\begin{equation}
+\int \cos ax \sinh bx\ dx = 
+\frac{1}{a^2 + b^2} \left[
+b \cos ax \cosh bx +
+ a \sin ax \sinh bx
+\right] 
+\end{equation}
+
+\begin{equation}
+\int \sin ax \cosh bx \ dx = 
+\frac{1}{a^2 + b^2} \left[
+-a \cos ax \cosh bx +
+ b \sin ax \sinh bx
+\right] 
+\end{equation}
+
+\begin{equation}
+\int \sin ax \sinh bx \ dx = 
+\frac{1}{a^2 + b^2} \left[
+b \cosh bx \sin ax -
+ a \cos ax \sinh bx
+\right] 
+\end{equation}
+
+\begin{equation}
+\int \sinh ax \cosh ax dx= 
+\frac{1}{4a}\left[ 
+-2ax + \sinh 2ax \right]
+\end{equation}
+
+\begin{equation}
+\int \sinh ax \cosh bx \ dx = 
+\frac{1}{b^2-a^2}\left[ 
+b \cosh bx \sinh ax 
+- a \cosh ax \sinh bx \right]
+\end{equation}
+
+
+\begin{footnotesize}
+\copyright \ 2014. From  \url{http://integral-table.com}, last revised \today. This material 
+is provided as is without warranty or representation about the accuracy, correctness or suitability of this material for any purpose. This work is licensed under the Creative Commons Attribution-Noncommercial-Share Alike 3.0 United States License. To view a copy of this license, visit \url{http://creativecommons.org/licenses/by-nc-sa/3.0/} or send a letter to Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.
+
+\end{footnotesize}
+
+
+\end{document}  
