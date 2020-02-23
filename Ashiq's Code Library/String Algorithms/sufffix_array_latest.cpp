@@ -82,6 +82,20 @@ struct SuffixArray {
     }
 }SA;
 
+bool cmp(pair<int,int> a, pair<int,int> b) {
+    int l1 = a.first, r1 = a.second, l2 = b.first, r2 = b.second;
+    bool f = 0;
+    if(SA.rev_sa[l2] < SA.rev_sa[l1]) {
+        swap(l1, l2);
+        swap(r1, r2);
+        f ^= 1;
+    }
+    int len1 = r1-l1+1, len2 = r2-l2+1;
+    int com = SA.query_lcp(SA.rev_sa[l1], SA.rev_sa[l2]);
+    if(com < min(len1, len2)) return f ^ 1;
+    return (len1 < len2) ^ f;
+}
+
 int main () {
 
     return 0;
