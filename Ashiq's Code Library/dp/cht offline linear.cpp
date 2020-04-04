@@ -45,6 +45,16 @@ struct CHT {
         while (ptr < M.size()-1 && f(ptr, x) > f(ptr+1, x)) ptr++; /// change > to < for maximum
         return f(ptr, x);
     }
+     
+    LL query2(LL x) {
+        int lo=0, hi=M.size()-1;
+        while(lo<hi) {
+            int mid = (lo+hi)/2;
+            if (f(mid, x) > f(mid+1, x))    lo = mid+1; /// change > to < for maximum
+            else                            hi = mid;
+        }
+        return f(lo, x);
+    }
 };
 
 
