@@ -2,33 +2,30 @@
 using namespace std;
 
 /// builds the prefix automaton in O(N*alphabet)
-vector< vector< int > >automaton;
-void buildAutomaton(const string& s)
-{
+
+vector<vector<int>>buildAutomaton(const string& s) {
     int n = s.size(), k = 0;
+    vector<vector<int>> aut(k, vector<int>(26));
 
-    vector< int >zer(26, 0);
-    for (int i = 0; i <= n; i++) automaton.push_back(zer);
-
-    automaton[0][s[0]-'a'] = 1;
+    aut[0][s[0]-'a'] = 1;
     for (int i = 1; i <= n; i++) {
-        automaton[i] = automaton[k];
+        aut[i] = aut[k];
 
         if (i < n) {
-            automaton[i][s[i]-'a'] = i+1;
-            k = automaton[k][s[i]-'a'];
+            aut[i][s[i]-'a'] = i+1;
+            k = aut[k][s[i]-'a'];
         }
     }
+    return aut;
 }
 
 /// everything 1-indexed
 /// v[i] = 0 -> empty string matched
 /// v[i] = k -> prefix s[0..(k-1)] matched
-vector<int> prefixFunction(const string& s)
-{
+
+vector<int> prefixFunction(const string& s) {
     int n = s.size(), k = 0;
-    
-    vector< int >v(n+1);
+    vector<int> v(n+1);
     v[1] = 0;
 
     for (int i = 2; i <= n; i++) {
@@ -39,8 +36,7 @@ vector<int> prefixFunction(const string& s)
     return v;
 }
 
-int kmpMatcher(const string& text, const string& pattern)
-{
+int kmpMatcher(const string& text, const string& pattern) {
     vector<int> pi = prefixFunction(pattern);
     int matchCount = 0, k = 0;
 
