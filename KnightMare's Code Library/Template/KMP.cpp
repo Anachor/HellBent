@@ -5,7 +5,7 @@ using namespace std;
 
 vector<vector<int>>buildAutomaton(const string& s) {
     int n = s.size(), k = 0;
-    vector<vector<int>> aut(k, vector<int>(26));
+    vector<vector<int>> aut(n+1, vector<int>(26));
 
     aut[0][s[0]-'a'] = 1;
     for (int i = 1; i <= n; i++) {
