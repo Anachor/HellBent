@@ -78,6 +78,23 @@ void hashPre() {
     invb = inverse(pb[1]);
 }
 
+///Calculates hashes of all prefixes of s including empty prefix
+vector<PLL> hashList(string s) {
+    int n = s.size();
+    vector<PLL> ans(n+1);
+    ans[0] = mp(0,0);
+
+    for (int i=1; i<=n; i++)
+        ans[i] = (ans[i-1] * base + s[i-1])%M;
+    return ans;
+}
+
+///Calculates hash of substring s[l..r] (1 indexed)
+PLL substringHash(const vector<PLL> &hashlist, int l, int r) {
+    int len = (r-l+1);
+    return reduce((hashlist[r] - hashlist[l-1]*pb[len])%M);
+}
+
 ///Calculates Hash of a string
 PLL Hash (string s) {
     PLL ans = mp(0,0);
@@ -126,23 +143,6 @@ PLL repeat(PLL hash, int len, LL cnt) {
     if (pb[len].ff == 1)    ans.ff = hash.ff*cnt;
     if (pb[len].ss == 1)    ans.ss = hash.ss*cnt;
     return ans%M;
-}
-
-///Calculates hashes of all prefixes of s including empty prefix
-vector<PLL> hashList(string s) {
-    int n = s.size();
-    vector<PLL> ans(n+1);
-    ans[0] = mp(0,0);
-
-    for (int i=1; i<=n; i++)
-        ans[i] = (ans[i-1] * base + s[i-1])%M;
-    return ans;
-}
-
-///Calculates hash of substring s[l..r] (1 indexed)
-PLL substringHash(const vector<PLL> &hashlist, int l, int r) {
-    int len = (r-l+1);
-    return reduce((hashlist[r] - hashlist[l-1]*pb[len])%M);
 }
 
 
