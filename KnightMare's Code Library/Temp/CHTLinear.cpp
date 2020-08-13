@@ -7,6 +7,8 @@ Requirement:
     Maximum:
         M increasing, x increasing, useless(s-3, s-2, s-1)
         M decreasing, x decreasing, useless(s-1, s-2, s-3)
+
+If queries are in arbitrary order, use query2 O(logn) per query.
 **/
 
 
@@ -44,6 +46,16 @@ struct CHT {
         if (ptr >= M.size()) ptr = M.size()-1;
         while (ptr < M.size()-1 && f(ptr, x) > f(ptr+1, x)) ptr++; /// change > to < for maximum
         return f(ptr, x);
+    }
+    
+    LL query2(LL x) {
+        int lo=0, hi=M.size()-1;
+        while(lo<hi) {
+            int mid = (lo+hi)/2;
+            if (f(mid, x) > f(mid+1, x))    lo = mid+1; /// change > to < for maximum
+            else                            hi = mid;
+        }
+        return f(lo, x);
     }
 };
 

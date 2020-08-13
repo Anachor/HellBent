@@ -51,8 +51,8 @@ void multiply(VI &P, VI &Q, VI &res) {
 ///use long double in fft if RT >= 13
 const int RT = 15;   ///Upto M <= 4^RT
 vector<LL>anymod(vector<LL>&a,vector<LL>&b,LL mod){
-  init(max(a.size(),b.size()));
-  vector<node> al(M), ar(M), bl(M), br(M);
+  init(max(a.size(),b.size())); node Z(0, 0);
+  vector<node>al(M,Z),ar(M,Z),bl(M,Z),br(M,Z);
   for (int i=0; i<a.size(); i++) {
     LL k = a[i]%mod; al[i] = node(k >> RT, 0);
     ar[i] = node(k & ((1<<RT)-1), 0);

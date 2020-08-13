@@ -39,15 +39,22 @@ ostream& operator<<(ostream& os, PLL hash) {
     return os<<"("<<hash.ff<<", "<<hash.ss<<")";
 }
 
-PLL operator+ (PLL a, LL x)     {return mp(a.ff + x, a.ss + x);}
-PLL operator- (PLL a, LL x)     {return mp(a.ff - x, a.ss - x);}
-PLL operator* (PLL a, LL x)     {return mp(a.ff * x, a.ss * x);}
-PLL operator+ (PLL a, PLL x)    {return mp(a.ff + x.ff, a.ss + x.ss);}
-PLL operator- (PLL a, PLL x)    {return mp(a.ff - x.ff, a.ss - x.ss);}
-PLL operator* (PLL a, PLL x)    {return mp(a.ff * x.ff, a.ss * x.ss);}
-PLL operator% (PLL a, PLL m)    {return mp(a.ff % m.ff, a.ss % m.ss);}
+PLL operator+ (const PLL& a, LL x)     {return mp(a.ff + x, a.ss + x);}
+PLL operator- (const PLL& a, LL x)     {return mp(a.ff - x, a.ss - x);}
+PLL operator* (const PLL& a, LL x)     {return mp(a.ff * x, a.ss * x);}
+PLL operator+ (const PLL& a, PLL x)    {return mp(a.ff + x.ff, a.ss + x.ss);}
+PLL operator- (const PLL& a, PLL x)    {return mp(a.ff - x.ff, a.ss - x.ss);}
+PLL operator* (const PLL& a, PLL x)    {return mp(a.ff * x.ff, a.ss * x.ss);}
+PLL operator% (const PLL& a, PLL m)    {return mp(a.ff % m.ff, a.ss % m.ss);}
 
-PLL power (PLL a, LL p) {
+PLL reduce(const PLL& a) {
+    PLL ans;
+    ans.ff = (a.ff >= M.ff ? a.ff-M.ff : (a.ff < 0 ? a.ff+M.ff : a.ff));
+    ans.ss = (a.ss >= M.ss ? a.ss-M.ss : (a.ss < 0 ? a.ss+M.ss : a.ss));
+    return ans;
+}
+
+PLL power (const PLL& a, LL p) {
     if (p==0)   return mp(1,1);
     PLL ans = power(a, p/2);
     ans = (ans * ans)%M;
@@ -71,6 +78,23 @@ void hashPre() {
     invb = inverse(pb[1]);
 }
 
+///Calculates hashes of all prefixes of s including empty prefix
+vector<PLL> hashList(string s) {
+    int n = s.size();
+    vector<PLL> ans(n+1);
+    ans[0] = mp(0,0);
+
+    for (int i=1; i<=n; i++)
+        ans[i] = (ans[i-1] * base + s[i-1])%M;
+    return ans;
+}
+
+///Calculates hash of substring s[l..r] (1 indexed)
+PLL substringHash(const vector<PLL> &hashlist, int l, int r) {
+    int len = (r-l+1);
+    return reduce((hashlist[r] - hashlist[l-1]*pb[len])%M);
+}
+
 ///Calculates Hash of a string
 PLL Hash (string s) {
     PLL ans = mp(0,0);
@@ -92,17 +116,17 @@ PLL prepend(PLL cur, int k, char c) {
 ///replaces the i-th (0-indexed) character from right from a to b;
 PLL replace(PLL cur, int i, char a, char b) {
     cur = (cur + pb[i] * (b-a))%M;
-    return (cur + M)%M;
+    return reduce(cur);
 }
 
 ///Erases c from the back of the string
 PLL pop_back(PLL hash, char c) {
-    return (((hash-c)*invb)%M+M)%M;
+    return reduce(((hash-c)*invb)%M);
 }
 
 ///Erases c from front of the string with size len
 PLL pop_front(PLL hash, int len, char c) {
-    return ((hash - pb[len-1]*c)%M+M)%M;
+    return reduce((hash - pb[len-1]*c)%M);
 }
 
 ///concatenates two strings where length of the right is k
@@ -113,36 +137,18 @@ PLL concat(PLL left, PLL right, int k) {
 ///Calculates hash of string with size len repeated cnt times
 ///This is O(log n). For O(1), pre-calculate inverses
 PLL repeat(PLL hash, int len, LL cnt) {
-    PLL mul = (pb[len*cnt] - 1) * inverse(pb[len]-1);
-    mul = (mul%M+M)%M;
-    PLL ans = (hash*mul)%M;
+    PLL mul = reduce(((pb[len*cnt] - 1) * inverse(pb[len]-1))%M);
+    PLL ans = (hash*mul);
 
     if (pb[len].ff == 1)    ans.ff = hash.ff*cnt;
     if (pb[len].ss == 1)    ans.ss = hash.ss*cnt;
-    return ans;
-}
-
-///Calculates hashes of all prefixes of s including empty prefix
-vector<PLL> hashList(string s) {
-    int n = s.size();
-    vector<PLL> ans(n+1);
-    ans[0] = mp(0,0);
-
-    for (int i=1; i<=n; i++)
-        ans[i] = (ans[i-1] * base + s[i-1])%M;
-    return ans;
-}
-
-///Calculates hash of substring s[l..r] (1 indexed)
-PLL substringHash(const vector<PLL> &hashlist, int l, int r) {
-    int len = (r-l+1);
-    return ((hashlist[r] - hashlist[l-1]*pb[len])%M+M)%M;
+    return ans%M;
 }
 
 
-///Solves LightOJ 1255-Substring Frequency
-///You are given two strings A and B. You have to find 
-///the number of times B occurs as a substring of A.
+///Solves SPOJ NAJPF - Pattern Find
+///You are given two strings A and B. You have to find
+///the positions where B occurs as a substring of A.
 char buffer[N];
 int main()
 {
@@ -159,10 +165,21 @@ int main()
 
         PLL hb = Hash(b);
         vector<PLL> ha = hashList(a);
-        int ans = 0;
 
+        vector<int> ans;
         for (int i=1; i+nb-1<=na; i++)
-            if (substringHash(ha, i, i+nb-1) == hb)  ans++;
-        printf("Case %d: %d\n", cs, ans);
+            if (substringHash(ha, i, i+nb-1) == hb)  ans.push_back(i);
+
+        if (ans.size() == 0) {
+            cout<<"Not Found\n";
+        }
+        else {
+            printf("%d\n", (int)ans.size());
+            for (int x: ans)    printf("%d ", x);
+            printf("\n");
+        }
+
+        if (cs < t) printf("\n");
     }
 }
+

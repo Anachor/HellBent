@@ -15,5 +15,5 @@ void manacher(const string s) {
 }
 bool ispalin(int l, int r) {
   int mid = (l+r+1)/2, sz = r-l+1;
-  return 2*p[sz%2][mid] + b>=sz;
+  return 2*p[sz%2][mid] + sz%2 >=sz;
 }
