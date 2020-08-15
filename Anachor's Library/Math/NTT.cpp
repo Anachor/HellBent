@@ -132,9 +132,6 @@ int power(int a, int p, int mod) {
 
 /** Find primitive root of p assuming p is prime.
 if not, we must add calculation of phi(p)
-Complexity : O(Ans * log (phi(n)) * log n + sqrt(p)) (if exists)
-             O(p * log (phi(n)) * log n + sqrt(p))   (if does not exist)
-Returns -1 if not found
 */
 
 int primitive_root(int p) {
