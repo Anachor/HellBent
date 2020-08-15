@@ -1,23 +1,19 @@
-/**
-Iterative Implementation of Discrete Fast Fourier Transform
-Complexity: O(N log N)
-
-Possible Optimizations:
-1. Remove leading zeros (No, seriously!!!!)
-2. Writing a custom complex class reduces runtime.
-3. If there are multiple testcases of similar sizes, it
-   might be faster to precalculate the roots of unity.
-**/
-
 #include<bits/stdc++.h>
 using namespace std;
 
-typedef complex<double> CD;
+struct CD {
+    double x, y;
+    CD(double x=0, double y=0) :x(x), y(y) {}
+    CD operator+(const CD& o) { return {x+o.x, y+o.y};}
+    CD operator-(const CD& o) { return {x-o.x, y-o.y};}
+    CD operator*(const CD& o) { return {x*o.x-y*o.y, x*o.y+o.x*y};}
+    CD operator/(double d)    { return {x/d, y/d};}
+};
+
 typedef long long LL;
 const double PI = acos(-1);
 
-struct FFT
-{
+namespace FFT {
     int N;
     vector<int> perm;
 
@@ -47,7 +43,7 @@ struct FFT
         for (int len = 2; len <= N; len <<= 1) {
             double angle = 2 * PI / len;
             if (invert) angle = -angle;
-            CD factor = polar(1.0, angle);
+            CD factor = {cos(angle), sin(angle)};
 
             for (int i=0; i<N; i+=len) {
                 CD w(1);
@@ -55,12 +51,12 @@ struct FFT
                     CD x = v[i+j], y = w * v[i+j+len/2];
                     v[i+j] = x+y;
                     v[i+j+len/2] = x-y;
-                    w *= factor;
+                    w = w*factor;
                 }
             }
         }
         if (invert)
-            for (CD &x : v) x/=N;
+            for (CD &x : v) x=x/N;
     }
 
     vector<LL> multiply(const vector<LL> &a, const vector<LL> &b) {
@@ -73,38 +69,48 @@ struct FFT
 
         fft(fa);
         fft(fb);
-        for (int i=0; i<n; i++) fa[i] *= fb[i];
+        for (int i=0; i<n; i++) fa[i] = fa[i] * fb[i];
         fft(fa, true);
 
         vector<LL> ans(n);
         for (int i=0; i<n; i++)
-            ans[i] = round(fa[i].real());
+            ans[i] = round(fa[i].x);
         return ans;
     }
-};
+}
 
-///Solves SPOJ POLYMUL
-///Given two polynomials, find their product
+const int N = 1e6+7;
+int ans[N];
 
-int main()
-{
-    int t;
-    cin>>t;
-    FFT fft;
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
 
-    while (t--)
-    {
-        int n;
-        cin>>n;
+    int n, x, y;
+    cin>>n>>x>>y;
 
-        vector<LL> a(n+1), b(n+1), ans;
-        for (int i=0; i<=n; i++)    cin>>a[n-i];
-        for (int i=0; i<=n; i++)    cin>>b[n-i];
+    vector<LL> a(x+1), b(x+1);
+    for (int i=0; i<=n; i++) {
+        int z;
+        cin>>z;
+        a[z] = b[x-z] = 1;
+    }
 
-        ans = fft.multiply(a, b);
+    a = FFT::multiply(a, b);
+    for (int i=x+1; i<=2*x; i++) {
+        if (a[i] == 0)  continue;
+        int z = i-x+y;
+        for (int k=z; k<N; k+=z)    ans[k] = z;
+    }
 
-        for (int i=2*n; i>=0; i--)
-            cout<<ans[i]<<" ";
-        cout<<endl;
+    int q;
+    cin>>q;
+
+    while (q--) {
+        int x;
+        cin>>x;
+        int res = ans[x/2]*2;
+        if (res == 0)   res--;
+        cout<<res<<"\n";
     }
 }
