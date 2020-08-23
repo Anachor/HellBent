@@ -1,29 +1,19 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
+const int N = 1e5+9, K = 18;
+int st[K][N], a[N], lg[N];
 
-const int N = 1e5 + 100, M = 5005, LOG = 20;
+void preprocess(int n) {
+    for(int i=1; i<=n; i++) st[0][i] = a[i];
 
-int rmq[N][LOG];
-int n, a[N];
-int lg[N];
+    for(int k=1; k<K; k++)
+        for(int i=1; i+(1<<k)-1<=n; i++)
+            st[k][i] = min(st[k-1][i],st[k-1][i+(1<<(k-1))]);
 
-void preprocess() {
-    for(int i = 1; i <= n; i++) rmq[i][0] = a[i] ;
-    for(int j = 1; j < LOG; j++) {
-        for(int i = 1; i <= n; i++) {
-            if (i+(1<<j)-1<=n) {
-                rmq[i][j] = max(rmq[i][j-1],rmq[i+(1<<(j-1))][j-1]) ;
-            }
-            else break ;
-        }
-    }
-    for(int i = 2; i < N; i++) {
-        lg[i] = lg[i/2] + 1;
-    }
+    for(int i=2; i<=n; i++)      lg[i] = lg[i/2]+1;
 }
 
 int query (int i , int j) {
     int k = lg[j-i+1];
-    int ans = max(rmq[i][k],rmq[j-(1<<k)+1][k]);
-    return ans;
+    return min(st[k][i],st[k][j-(1<<k)+1]);
 }
