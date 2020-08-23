@@ -3,7 +3,7 @@ using namespace std;
 const int N = 1e5+9, K = 18;
 int st[K][N], a[N], lg[N];
 
-void preprocess(int n) {
+void buildRMQ(int n) {
     for(int i=1; i<=n; i++) st[0][i] = a[i];
 
     for(int k=1; k<K; k++)
