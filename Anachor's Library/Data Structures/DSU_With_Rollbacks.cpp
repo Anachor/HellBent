@@ -16,7 +16,7 @@ struct DSU {
         return u;
     }
 
-    bool merge(int u, int v, int x) {
+    bool merge(int u, int v) {
         u = find(u);
         v = find(v);
         if (u == v)   return false;
