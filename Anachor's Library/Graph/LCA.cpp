@@ -8,8 +8,8 @@ int anc[N][K];
 int level[N];
 
 void setup(int u, int par) {
-    if (par == -1)  level[u] = 0, anc[u][0] = u;
-    else            level[u] = level[par]+1, anc[u][0] = par;
+    level[u] = level[par]+1;
+    anc[u][0] = par;
     for (int k=1; k<K; k++)     anc[u][k] = anc[anc[u][k-1]][k-1];
 
     for (int v: adj[u]) {
@@ -61,7 +61,7 @@ int main() {
         adj[v].push_back(u);
     }
 
-    setup(1, -1);
+    setup(1, 0);
 
     int q;
     cin>>q;
