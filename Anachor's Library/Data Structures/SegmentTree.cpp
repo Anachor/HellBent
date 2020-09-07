@@ -19,6 +19,7 @@ LL combine (LL left, LL right) {
 
 ///2. Push lazy down and merge lazy
 void propagate(int u, int st, int en) {
+    if (!lz[u]) return;
     tr[u] += (en-st+1)*lz[u];
     if (st!=en) {
         lz[2*u] += lz[u];
