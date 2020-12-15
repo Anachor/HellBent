@@ -13,11 +13,6 @@ miller_rabin(n)
 pollard_rho(n):
     If n is prime, returns n
     Otherwise returns a proper divisor of n
-    Able to factorize ~120 18 digit semiprimes in 1 second on Toph
-    Able to factorize ~700 15 digit semiprimes in 1 second on Toph
-
-Note: for factorizing large number, do trial division upto
-      cubic root and then call pollard rho once.
 */
 
 
@@ -102,9 +97,7 @@ LL pollard_rho(LL n) {
     }
 }
 
-
-///Solves UVA - 11476
-const int MX = 2.2e5+7;
+const int MX = 1e6+7;
 vector<int> primes;
 bool isp[MX];
 
@@ -135,33 +128,19 @@ vector<LL> factorize(LL x) {
     return ans;
 }
 
-int main()
-{
-//    freopen("in.txt", "r", stdin);
-//    freopen("out-mine.txt", "w", stdout);
+///Solves https://judge.yosupo.jp/problem/factorize
+
+int main() {
     sieve();
-    int t;
-    cin>>t;
+    int q;
+    cin>>q;
 
-    while (t--) {
+    while (q--) {
         long long x;
-        if (!(cin>>x))    break;
-        vector<LL> ans  = factorize(x);
-        sort(ans.begin(), ans.end());
-
-        vector<pair<LL, int>> ff;
-        for (LL x: ans) {
-            if (ff.size() && ff.back().first == x)  ff.back().second++;
-            else    ff.push_back({x, 1});
-        }
-        cout<<x<<" =";
-        bool first = true;
-        for (auto pr: ff)   {
-            if (!first) cout<<" *";
-            first = false;
-            cout<<" "<<pr.first;
-            if (pr.second > 1)cout<<"^"<<pr.second;
-        }
+        cin>>x;
+        vector<LL> ans = factorize(x);
+        cout<<ans.size();
+        for (int x: ans)    cout<<" "<<x;
         cout<<endl;
     }
 }

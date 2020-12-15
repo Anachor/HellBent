@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-const int M = 998244353;
+const int M = 1e9+7;
 
 int power(int a, int p) {
     if (p == 0) return 1;
