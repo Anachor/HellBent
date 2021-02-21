@@ -10,23 +10,13 @@ typedef long long LL;
 vector<LL> XorTransform(vector<LL> p, bool inverse) {
     int n = p.size();
     assert((n&(n-1))==0);
-
     for (int len = 1; 2*len <= n; len <<= 1) {
         for (int i = 0; i < n; i += len+len) {
             for (int j = 0; j < len; j++) {
-                LL u = p[i+j];
-                LL v = p[i+len+j];
-                p[i+j] = u+v;
-                p[i+len+j] = u-v;
-
+                LL u = p[i+j], v = p[i+len+j];
+                if (!inverse)   p[i+j] = u+v, p[i+len+j] = u-v;
+                else            p[i+j] = (u+v)/2, p[i+len+j] = (u-v)/2;
             }
-        }
-    }
-
-    if (inverse) {
-        for (int i = 0; i < n; i++) {
-            assert(p[i]%n==0);
-            p[i] /= n;
         }
     }
     return p;
@@ -108,7 +98,6 @@ vector<LL> SubsetConvolution(const vector<LL> &a, const vector<LL> &b) {
     }
     return ans;
 }
-
 
 int main() {
     ios::sync_with_stdio(0);

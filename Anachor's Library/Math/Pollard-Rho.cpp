@@ -1,146 +1,79 @@
-/**
-Range: 10^18 (tested), should be okay up to 2^63-1
-
-miller_rabin(n)
-    returns 1 if prime, 0 otherwise
-    Magic bases:
-        n < 4,759,123,141        3 :  2, 7, 61
-        n < 1,122,004,669,633    4 :  2, 13, 23, 1662803
-        n < 3,474,749,660,383    6 :  2, 3, 5, 7, 11, 13
-        n < 2^64                 7 : 2, 325, 9375, 28178, 450775, 9780504, 1795265022
-    Identifies 70000 18 digit primes in 1 second on Toph
-
-pollard_rho(n):
-    If n is prime, returns n
-    Otherwise returns a proper divisor of n
-*/
-
-
 #include<bits/stdc++.h>
-#define LL long long
 using namespace std;
 
-LL mult(LL a, LL b, LL mod) {
-    assert(b < mod && a < mod);
-    long double x = a;
-    uint64_t c = x * b / mod;
-    int64_t r = (int64_t)(a * b - c * mod) % (int64_t)mod;
-    return r < 0 ? r + mod : r;
-}
+typedef long long LL;
+typedef unsigned long long ULL;
 
-LL power(LL x, LL p, LL mod){
-	LL s=1, m=x;
-	while(p) {
-		if(p&1) s = mult(s, m, mod);
-		p>>=1;
-		m = mult(m, m, mod);
-	}
-	return s;
-}
-
-bool witness(LL a, LL n, LL u, int t){
-	LL x = power(a,u,n);
-	for(int i=0; i<t; i++) {
-		LL nx = mult(x, x, n);
-		if (nx==1 && x!=1 && x!=n-1) return 1;
-		x = nx;
-	}
-	return x!=1;
-}
-
-vector<LL> bases = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};
-bool miller_rabin(LL n) {
-	if (n<2)    return 0;
-	if (n%2==0)   return n==2;
-
-	LL u = n-1;
-	int t = 0;
-	while(u%2==0)   u/=2, t++;  // n-1 = u*2^t
-
-	for (LL v: bases) {
-		LL a = v%(n-1) + 1;
-		if(witness(a, n, u, t)) return 0;
+namespace Rho {
+    ULL mult(ULL a, ULL b, ULL mod) {
+        LL ret = a * b - mod * (ULL)(1.0L / mod * a * b);
+        return ret + mod * (ret < 0) - mod * (ret >= (LL) mod);
     }
-	return 1;
-}
 
-LL gcd(LL u, LL v) {
-    if (u == 0) return v;
-    if (v == 0) return u;
-    int shift = __builtin_ctzll(u | v);
-    u >>= __builtin_ctzll(u);
-    do {
-        v >>= __builtin_ctzll(v);
-        if (u > v) swap(u, v);
-        v = v - u;
-    } while (v);
-    return u << shift;
-}
-
-mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
-LL pollard_rho(LL n) {
-    if (n==1)               return 1;
-    if (n%2==0)             return 2;
-	if (miller_rabin(n))    return n;
-
-    while (true) {
-        LL x = uniform_int_distribution<LL>(1, n-1)(rng);
-        LL y = 2, res = 1;
-        for (int sz=2; res == 1; sz*=2) {
-            for (int i=0; i<sz && res<=1; i++) {
-                x = mult(x, x, n) + 1;
-                res = gcd(abs(x-y), n);
-            }
-            y = x;
+    ULL power(ULL x, ULL p, ULL mod){
+        ULL s=1, m=x;
+        while(p) {
+            if(p&1) s = mult(s, m, mod);
+            p>>=1;
+            m = mult(m, m, mod);
         }
-        if (res!=0 && res!=n) return res;
+        return s;
     }
-}
 
-const int MX = 1e6+7;
-vector<int> primes;
-bool isp[MX];
+    vector<LL> bases = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};
+    bool isprime(LL n) {
+        if (n<2)    return 0;
+        if (n%2==0)   return n==2;
 
-void sieve() {
-    fill(isp+2, isp+MX, 1);
-    for (int i=2; i<MX; i++)
-        if (isp[i]) {
-            primes.push_back(i);
-            for (int j=2*i; j<MX; j+=i)
-                isp[j] = 0;
+        ULL s = __builtin_ctzll(n-1), d = n>>s;
+        for (ULL x: bases) {
+            ULL p = power(x%n, d, n), t = s;
+            while (p!=1 && p!=n-1 && x%n && t--) p = mult(p, p, n);
+            if (p!=n-1 && t != s)               return 0;
         }
-}
+        return 1;
+    }
 
-vector<LL> factorize(LL x) {
-    vector<LL> ans;
-    for (int p: primes) {
-        if (1LL*p*p*p > x)  break;
-        while (x%p==0)  {
-            x/=p;
-            ans.push_back(p);
+    ///Returns a proper divisor if n is composite, n otherwise
+    ///Possible Optimization: use binary gcd for ~10% speedup
+    mt19937_64 rng(chrono::system_clock::now().time_since_epoch().count());
+    ULL FindFactor(ULL n) {
+        if (n == 1 || isprime(n))    return n;
+        ULL c = 1, x = 0, y = 0, t = 0, prod = 2, x0 = 1, q;
+        auto f = [&](ULL X) { return mult(X, X, n) + c;};
+
+        while (t++ % 128 or gcd(prod, n) == 1) {
+            if (x == y) c = rng()%(n-1)+1, x = x0, y = f(x);
+            if ((q = mult(prod, max(x, y) - min(x, y), n))) prod = q;
+            x = f(x), y = f(f(y));
         }
+        return gcd(prod, n);
     }
-    if (x > 1) {
-        LL z = pollard_rho(x);
-        ans.push_back(z);
-        if (z < x)  ans.push_back(x/z);
+
+    ///Returns all prime factors
+    vector<ULL> factorize(ULL x) {
+        if (x == 1)     return {};
+        ULL a = FindFactor(x), b = x/a;
+        if (a == x) return {a};
+        vector<ULL> L = factorize(a), R = factorize(b);
+        L.insert(L.end(), R.begin(), R.end());
+        return L;
     }
-    return ans;
 }
 
 ///Solves https://judge.yosupo.jp/problem/factorize
 
 int main() {
-    sieve();
     int q;
     cin>>q;
 
     while (q--) {
         long long x;
         cin>>x;
-        vector<LL> ans = factorize(x);
+        vector<ULL> ans = Rho::factorize(x);
+        sort(ans.begin(), ans.end());
         cout<<ans.size();
-        for (int x: ans)    cout<<" "<<x;
+        for (LL x: ans)    cout<<" "<<x;
         cout<<endl;
     }
 }

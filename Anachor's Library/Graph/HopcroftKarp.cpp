@@ -1,20 +1,21 @@
 /**
-    Hopcroft Karp Weighted Bipartite Matching Algorithm
-    Complexity: E sqrt(V)
+    Hopcroft Karp Bipartite Matching Algorithm
+    Complexity: E sqrt(V)   (much better in practice)
     Source: Foreverbell ICPC cheat sheet
     1-indexed. Left and Right independently numbered.
+    ml, mr contain matches for left and right parts.
 */
-
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-const int maxN = 50000+5, maxM = 50000+5;
-struct HopcroftKarp {
-  int n;
+namespace HopcroftKarp {
+  const int maxN = 1e5+7, maxM = 1e5+7;     ///Check
+  int n, m;
   int vis[maxN], level[maxN], ml[maxN], mr[maxM];
-  vector<int> edge[maxN]; // constructing edges for left part only
+  vector<int> edge[maxN];   /// constructing edges for left part only
 
-  HopcroftKarp(int n) : n(n) {      // n = nodes in left part
+  void init(int N, int M) {      /// N = nodes in left part, M = nodes in right part
+    n = N, m = M;
     for (int i = 1; i <= n; ++i) edge[i].clear();
   }
 
@@ -24,22 +25,20 @@ struct HopcroftKarp {
 
   bool dfs(int u) {
     vis[u] = true;
-    for (vector<int>::iterator it = edge[u].begin(); it != edge[u].end(); ++it) {
-      int v = mr[*it];
+    for (int x: edge[u]) {
+      int v = mr[x];
       if (v == -1 || (!vis[v] && level[u] < level[v] && dfs(v))) {
-        ml[u] = *it;
-        mr[*it] = u;
+        ml[u] = x;
+        mr[x] = u;
         return true;
       }
     }
     return false;
   }
 
-  int matching() { // n for left
-    memset(vis, 0, sizeof vis);
-    memset(level, 0, sizeof level);
-    memset(ml, -1, sizeof ml);
-    memset(mr, -1, sizeof mr);
+  int matching() {
+    for (int i=1; i<=n; i++)    ml[i] = -1;
+    for (int i=1; i<=m; i++)    mr[i] = -1;
 
     for (int match = 0;;) {
       queue<int> que;
@@ -52,8 +51,8 @@ struct HopcroftKarp {
       while (!que.empty()) {
         int u = que.front();
         que.pop();
-        for (vector<int>::iterator it = edge[u].begin(); it != edge[u].end(); ++it) {
-          int v = mr[*it];
+        for (int x: edge[u]) {
+          int v = mr[x];
           if (v != -1 && level[v] < 0) {
             level[v] = level[u] + 1;
             que.push(v);
@@ -67,10 +66,9 @@ struct HopcroftKarp {
       match += d;
     }
   }
-};
+}
 
-
-/// The following code solves SPOJ MATCHING - Fast Maximum Matching
+/// Solves https://judge.yosupo.jp/problem/bipartitematching
 
 int main()
 {
@@ -80,13 +78,17 @@ int main()
     int n, m, k;
     cin>>n>>m>>k;
 
-    HopcroftKarp solver(n);
+    HopcroftKarp::init(n, m);
 
     while(k--) {
         int a, b;
         cin>>a>>b;
-        solver.add(a, b);
+        a++; b++;
+        HopcroftKarp::add(a, b);
     }
 
-    cout<<solver.matching()<<endl;
+    cout<<HopcroftKarp::matching()<<endl;
+    for (int i=1; i<=n; i++)
+        if (HopcroftKarp::ml[i] != -1)
+            cout<<i-1<<" "<<HopcroftKarp::ml[i]-1<<"\n";
 }

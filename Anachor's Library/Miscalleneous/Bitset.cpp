@@ -1,6 +1,5 @@
 /**
     Simple Bitset Class with ability to perform range bitwise operations.
-    Written by - Anachor
 **/
 
 
@@ -47,57 +46,39 @@ struct Bitset {
     }
 
     void set(int l, int r) {
-        int idl = l>>B;
-        int idr = r>>B;
-        int posl = l&X;
-        int posr = r&X;
-
+        int idl = l>>B, idr = r>>B;
+        int posl = l&X, posr = r&X;
         if (idl == idr) {
             bs[idl] |= getmask(posl, posr);
             return;
         }
-
         bs[idl] |= getmask(posl, X);
         bs[idr] |= getmask(0, posr);
-
-        for (int id = idl+1; id < idr; id++)
-            bs[id] = -1;
+        for (int id = idl+1; id < idr; id++)    bs[id] = -1;
     }
 
     void reset(int l, int r) {
-        int idl = l>>B;
-        int idr = r>>B;
-        int posl = l&X;
-        int posr = r&X;
-
+        int idl = l>>B, idr = r>>B;
+        int posl = l&X, posr = r&X;
         if (idl == idr) {
             bs[idl] &= ~getmask(posl, posr);
             return;
         }
-
         bs[idl] &= ~getmask(posl, X);
         bs[idr] &= ~getmask(0, posr);
-
-        for (int id = idl+1; id < idr; id++)
-            bs[id] = 0;
+        for (int id = idl+1; id < idr; id++)    bs[id] = 0;
     }
 
     void flip(int l, int r) {
-        int idl = l>>B;
-        int idr = r>>B;
-        int posl = l&X;
-        int posr = r&X;
-
+        int idl = l>>B, idr = r>>B;
+        int posl = l&X, posr = r&X;
         if (idl == idr) {
             bs[idl] ^= getmask(posl, posr);
             return;
         }
-
         bs[idl] ^= getmask(posl, X);
         bs[idr] ^= getmask(0, posr);
-
-        for (int id = idl+1; id < idr; id++)
-            bs[id] = ~bs[id];
+        for (int id = idl+1; id < idr; id++)    bs[id] = ~bs[id];
     }
 };
 

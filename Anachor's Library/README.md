@@ -22,7 +22,6 @@ To-Do (Priority):
 20. Persistent Segtree (1)
 21. Geometry (3)
 22. Hungarian (2)
-23. SCC, 2SAT (4)
 24. discrete log/root (3)
 25. floor_sum (4)
 26. Polynomials (3)

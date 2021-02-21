@@ -19,7 +19,6 @@ namespace SCC {
     void addEdge(int u, int v) {
         adj[u].push_back(v);
         adjr[v].push_back(u);
-        order.clear();
     }
 
     void dfs1(int u){
@@ -39,6 +38,7 @@ namespace SCC {
     void findSCC(int n) {
         cc = 0;
 
+        order.clear();
         fill(vis, vis+n, 0);
         for(int i=0; i<n; i++)
             if(!vis[i])     dfs1(i);
@@ -53,7 +53,7 @@ namespace SCC {
     }
 }
 
-///If there are n vars x1,....,xn, Node 2*i denotes x_i and 2*i+1 deonotes !x_i.
+///If there are n vars x1,....,xn, Node 2*i denotes x_i and 2*i+1 denotes !x_i.
 ///For example, for clause (x^!y), call OR(2*x, 2*y+1).
 ///make sure SCC::N >= vars
 
@@ -73,18 +73,16 @@ struct TwoSat {
     }
 
     void OR(int x, int y) {
-        implies(x^1, y);
+        SCC::addEdge(x^1, y);
+        SCC::addEdge(y^1, x);
     }
 
     void XOR(int x, int y) {
-        implies(x, !y);
-        implies(!x, y);
+        implies(x, y^1);
+        implies(x^1, y);
     }
 
-    void forceTrue(int x, bool val) {
-        SCC::addEdge(x^1, x);
-    }
-
+    ///Untested, need problem to test on.
     void atmostOne(vector<int> v) {
         int k = v.size();
         for (int i=0; i<k; i++) {
@@ -97,6 +95,7 @@ struct TwoSat {
 
     bool solve() {
         SCC::findSCC(vars);
+        ans.resize(vars/2);
         for (int i=0; i<vars; i+=2) {
             if (SCC::which[i] == SCC::which[i+1])
                 return false;
@@ -106,58 +105,30 @@ struct TwoSat {
     }
 };
 
-///solves CF 1215F
+///solves CSES 1684 Giant Pizza
 int main() {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int n, p, M, m;
-    cin>>n>>p>>M>>m;
+    int n, m;
+    cin>>m>>n;
 
-    TwoSat solver(p+M+1);
+    TwoSat solver(n);
 
-    for (int i=0; i<n; i++) {
+    while (m--) {
+        char a, b;
         int x, y;
-        cin>>x>>y;
-        x--; y--;
-        solver.OR(2*x, 2*y);
+        cin>>a>>x>>b>>y;
+
+        x = (x-1)*2+(a=='-');
+        y = (y-1)*2+(b=='-');
+        solver.OR(x, y);
     }
 
-    for (int i=0; i<p; i++) {
-        int l, r;
-        cin>>l>>r;
-        solver.implies(2*i, 2*(p+r));
-        solver.implies(2*i, 2*(p+l-1)+1);
+    if (!solver.solve()) {
+        cout<<"IMPOSSIBLE"<<endl;
     }
-
-    for (int i=0; i<M; i++) {
-        solver.implies(2*(p+i), 2*(p+i+1));
+    else {
+        for (bool b: solver.ans)    cout<<(b ? "+" : "-")<<" ";
     }
-
-    for (int i=0; i<m; i++) {
-        int x, y;
-        cin>>x>>y;
-        x--; y--;
-        solver.OR(2*x+1, 2*y+1);
-    }
-
-    bool b = solver.solve();
-    if (!b) {
-        cout<<-1<<endl;
-        return 0;
-    }
-
-    vector<int> ans;
-    for (int i=0; i<p; i++)
-        if (solver.ans[i])
-            ans.push_back(i+1);
-
-    int f;
-    for (int i=1; i<=M; i++)
-        if (solver.ans[p+i]) {
-            f = i;
-            break;
-        }
-    cout<<ans.size()<<" "<<f<<endl;
-    for (int x: ans)    cout<<x<<" ";
 }

@@ -8,10 +8,6 @@
 using namespace std;
 typedef pair<LL, LL> PLL;
 
-
-/// Computes gcd(a,b)
-/// Range: LL
-
 LL gcd(LL u, LL v) {
     if (u == 0) return v;
     if (v == 0) return u;
@@ -26,13 +22,11 @@ LL gcd(LL u, LL v) {
 }
 
 /// computes lcm(a,b)
-/// Range: int
 LL lcm(LL a, LL b) {
 	return (a/gcd(a, b))*b;
 }
 
 /// (a^b) mod m via successive squaring
-/// Range: int
 LL power(LL a, LL b, LL m) {
     a = (a%m+m)%m;
 	LL ans = 1;
@@ -45,7 +39,6 @@ LL power(LL a, LL b, LL m) {
 }
 
 /// returns g = gcd(a, b); finds x, y such that d = ax + by
-/// Range: int (tested on CF 982E :( )
 LL egcd(LL a, LL b, LL &x, LL &y) {
 	LL xx = y = 0;
 	LL yy = x = 1;
@@ -59,7 +52,6 @@ LL egcd(LL a, LL b, LL &x, LL &y) {
 }
 
 /// finds all solutions to ax = b (mod m)
-/// Range: int (not tested)
 vector<LL> SolveCongruence(LL a, LL b, LL m) {
 	LL x, y;
 	vector<LL> ans;
@@ -76,7 +68,6 @@ vector<LL> SolveCongruence(LL a, LL b, LL m) {
 }
 
 /// Computes b such that ab = 1 (mod m), returns -1 on failure
-/// Range: int
 LL inverse(LL a, LL m) {
 	LL x, y;
 	LL g = egcd(a, m, x, y);
@@ -88,7 +79,6 @@ LL inverse(LL a, LL m) {
 /// find z such that z % m1 = r1, z % m2 = r2.
 /// Here, z is unique modulo M = lcm(m1, m2).
 /// Return (z, M).  On failure, M = -1.
-/// Range: int (tested on CF 982E :( )
 PLL CRT(LL m1, LL r1, LL m2, LL r2) {
 	LL s, t;
 	LL g = egcd(m1, m2, s, t);
@@ -106,7 +96,6 @@ PLL CRT(LL m1, LL r1, LL m2, LL r2) {
 /// The solution is unique modulo M = lcm(m[i]).
 /// Return (z, M). On failure, M = -1.
 /// Note that we do not require the mod values to be co-prime.
-/// Range: int (if LCM fits in LL)
 PLL CRT(const vector<LL> &m, const vector<LL> &r) {
 	PLL ans = PLL(r[0], m[0]);
 	for (LL i = 1; i < m.size(); i++) {
@@ -118,7 +107,6 @@ PLL CRT(const vector<LL> &m, const vector<LL> &r) {
 
 /// computes x and y such that ax + by = c
 /// returns whether the solution exists
-/// Range: int
 bool LinearDiophantine(LL a, LL b, LL c, LL &x, LL &y) {
 	if (!a && !b) {
 		if (c) return false;
@@ -141,6 +129,33 @@ bool LinearDiophantine(LL a, LL b, LL c, LL &x, LL &y) {
 	y = (c-a*x)/b;
 	return true;
 }
+
+
+/** Find smallest primitive root of p assuming p is prime.
+if not, change phi to phi(p);
+*/
+
+int primitive_root(int p) {
+    if (p == 2) return 1;
+    int phi = p-1, n = phi;
+
+    vector<int> factor;
+    for (int i=2; i*i<=n; ++i)
+        if (n%i == 0) {
+            factor.push_back (i);
+            while (n%i==0)  n/=i;
+        }
+
+    if (n>1)  factor.push_back(n);
+    for (int res=2; res<=p; ++res) {
+        bool ok = true;
+        for (int i=0; i<factor.size() && ok; ++i)
+            ok &= power(res, phi/factor[i], p) != 1;
+        if (ok)  return res;
+    }
+    return -1;
+}
+
 
 int main() {
 	// expected: 2

@@ -32,7 +32,7 @@ typedef long long LL;
 typedef pair<LL, LL> PLL;
 
 const PLL M=mp(1e9+7, 1e9+9);   ///Should be large primes
-const LL base=347;              ///Should be a prime larger than highest value
+const LL base=347;              ///Should be larger than alphabet size
 const int N = 1e6+7;            ///Highest length of string
 
 ostream& operator<<(ostream& os, PLL hash) {
