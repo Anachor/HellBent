@@ -12,10 +12,6 @@ namespace SCC {
     int cc;                 ///No of SCCs
     bool vis[N];
 
-    void clear() {
-        for (int i=0; i<N; i++)     adj[i].clear(), adjr[i].clear();
-    }
-
     void addEdge(int u, int v) {
         adj[u].push_back(v);
         adjr[v].push_back(u);
@@ -35,9 +31,9 @@ namespace SCC {
         which[u] = id;
     }
 
+    int last = 0;
     void findSCC(int n) {
-        cc = 0;
-
+        cc = 0, last = n;
         order.clear();
         fill(vis, vis+n, 0);
         for(int i=0; i<n; i++)
@@ -51,6 +47,11 @@ namespace SCC {
             ++cc;
         }
     }
+
+    void clear() {
+        for (int i=0; i<last; i++)     adj[i].clear(), adjr[i].clear();
+    }
+
 }
 
 ///If there are n vars x1,....,xn, Node 2*i denotes x_i and 2*i+1 denotes !x_i.
@@ -82,7 +83,7 @@ struct TwoSat {
         implies(x^1, y);
     }
 
-    ///Untested, need problem to test on.
+    ///Tested on GYM 101987K
     void atmostOne(vector<int> v) {
         int k = v.size();
         for (int i=0; i<k; i++) {
@@ -97,38 +98,41 @@ struct TwoSat {
         SCC::findSCC(vars);
         ans.resize(vars/2);
         for (int i=0; i<vars; i+=2) {
-            if (SCC::which[i] == SCC::which[i+1])
-                return false;
+            if (SCC::which[i] == SCC::which[i+1])   return false;
             if (i<2*n)      ans[i/2] = SCC::which[i] > SCC::which[i+1];
         }
         return true;
     }
 };
 
-///solves CSES 1684 Giant Pizza
+///https://judge.yosupo.jp/problem/two_sat
 int main() {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
+    string s;
     int n, m;
-    cin>>m>>n;
+    cin>>s>>s>>n>>m;
 
     TwoSat solver(n);
 
     while (m--) {
-        char a, b;
-        int x, y;
-        cin>>a>>x>>b>>y;
-
-        x = (x-1)*2+(a=='-');
-        y = (y-1)*2+(b=='-');
+        int x, y, z;
+        cin>>x>>y>>z;
+        x = 2*(abs(x)-1)+(x<0);
+        y = 2*(abs(y)-1)+(y<0);
         solver.OR(x, y);
+
     }
 
-    if (!solver.solve()) {
-        cout<<"IMPOSSIBLE"<<endl;
+    if (false) {
+        cout<<"s UNSATISFIABLE"<<endl;
     }
     else {
-        for (bool b: solver.ans)    cout<<(b ? "+" : "-")<<" ";
+        cout<<"s SATISFIABLE"<<endl;
+        cout<<"v ";
+        solver.ans.resize(n);
+        for (int i=0; i<solver.ans.size(); i++)    cout<<(solver.ans[i] == 0 ?  -i-1 :i+1)<<" ";
+        cout<<0<<endl;
     }
 }
