@@ -135,11 +135,11 @@ bool LinearDiophantine(LL a, LL b, LL c, LL &x, LL &y) {
 if not, change phi to phi(p);
 */
 
-int primitive_root(int p) {
+LL primitive_root(LL p) {
     if (p == 2) return 1;
-    int phi = p-1, n = phi;
+    LL phi = p-1, n = phi;
 
-    vector<int> factor;
+    vector<LL> factor;
     for (int i=2; i*i<=n; ++i)
         if (n%i == 0) {
             factor.push_back (i);
