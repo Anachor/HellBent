@@ -1,6 +1,12 @@
 /**
 Iterative Implementation of Number Theoretic Transform
 Complexity: O(N log N)
+
+7340033 = 7 * 2^20, G = 3
+645922817 = 77 * 2^23, G = 3
+897581057 = 107 * 2^23, G = 3
+998244353 = 119 * 2^23, G = 3
+
 **/
 
 #include<bits/stdc++.h>
@@ -20,7 +26,6 @@ namespace NTT {
         }
         return ans;
     }
-
 
     void precalculate(int n) {
         assert( (n&(n-1)) == 0 && (mod-1)%n==0);

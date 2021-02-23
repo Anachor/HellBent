@@ -1,20 +1,29 @@
 /**
 Iterative Implementation of FFT and FFTanymod. Complexity: O(N log N)
-Use pairfft to do two ffts of real vectors at once. slightly less accurate
+
+1. Whenever possible remove leading zeros.
+2. Custom Complex class may slightly improve performance.
+3. Use pairfft to do two ffts of real vectors at once, slightly less accurate
 than doing two ffts, but faster by about 30%.
+4. FFT accuracy depends on answer. x <= 5e14 (double), x <= 1e18(long double)
+   where x = max(ans[i]) for FFT, and x = N*mod for anymod
 **/
 
 #include<bits/stdc++.h>
 using namespace std;
 
-typedef complex<double> CD;
-//struct CD {
-//    double x, y;
-//    CD(double x=0, double y=0) :x(x), y(y) {}
-//    CD operator+(const CD& o) { return {x+o.x, y+o.y};}
-//    CD operator-(const CD& o) { return {x-o.x, y-o.y};}
-//    CD operator*(const CD& o) { return {x*o.x-y*o.y, x*o.y+o.x*y};}
-//};
+//typedef complex<double> CD;
+struct CD {
+    double x, y;
+    CD(double x=0, double y=0) :x(x), y(y) {}
+    CD operator+(const CD& o) { return {x+o.x, y+o.y};}
+    CD operator-(const CD& o) { return {x-o.x, y-o.y};}
+    CD operator*(const CD& o) { return {x*o.x-y*o.y, x*o.y+o.x*y};}
+    void operator /= (double d) { x/=d; y/=d;}
+    double real() {return x;}
+    double imag() {return y;}
+};
+CD conj(const CD &c) {return CD(c.x, -c.y);}
 
 typedef long long LL;
 const double PI = acos(-1.0L);
@@ -101,8 +110,9 @@ namespace FFT {
         return ans;
     }
 
-    vector<LL> anyMod(const vector<LL> &a, const vector<LL> &b, int M) {
-        int B = sqrt(M)+1, n = 1;
+    const int M = 1e9+7, B = sqrt(M)+1;
+    vector<LL> anyMod(const vector<LL> &a, const vector<LL> &b) {
+        int n = 1;
         while (n < a.size()+ b.size())  n<<=1;
         vector<CD> al(n), ar(n), bl(n), br(n);
 
@@ -131,6 +141,8 @@ namespace FFT {
         return ans;
     }
 }
+
+///Solves https://old.yosupo.jp/problem/convolution_mod_1000000007
 int main() {
     ios::sync_with_stdio(0);
     cin.tie(0);
@@ -142,9 +154,7 @@ int main() {
     for (int i=0; i<n; i++) cin>>a[i];
     for (int i=0; i<m; i++) cin>>b[i];
 
-    int M = 1e9+7;
-    vector<LL> ans = FFT::anyMod(a, b, M);
+    vector<LL> ans = FFT::anyMod(a, b);
     ans.resize(n+m-1);
     for (LL x: ans) cout<<x<<" ";
-
 }
