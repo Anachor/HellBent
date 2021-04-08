@@ -11,10 +11,6 @@
 
     For memoization, you can use a hashmap, alternatively if all values are
     needed are of the form N/x for some N, you can use mem[x] = sf(N/x)
-
-    Exact Complexity: O(precal(RT)) + N/sqrt(RT)*O(sg) + N/RT * O(sh),
-    where RT = precalc limit. If there are multiple queries, it may be
-    advantageous to increase RT.
 */
 
 #include<bits/stdc++.h>
@@ -61,18 +57,11 @@ long long solve(long long x) {
     long long ans = sh(x);
     for (long long i=1, last=x; i*i<=x; i++) {
         long long l=i, r=i, inv=last;
-        if (i > 1) ans = (ans - (sg(r)-sg(l-1))*solve(inv))%M;
-
+        if (i > 1)     ans = (ans - (sg(r)-sg(l-1))*solve(inv))%M;
         l=x/(i+1)+1, r=last, inv=i;
         if (last != i) ans = (ans - (sg(r)-sg(l-1))*solve(inv))%M;
-
         last = l-1;
     }
-
-//    for (long long i=2, r; i<=x; i=r+1) {
-//        r = x/(x/i);
-//        ans = (ans - (sg(r)-sg(i)+1)*solve(x/i))%M;
-//    }
 
     ans = (ans%M+M)%M;
     return mem[N/x] = ans;

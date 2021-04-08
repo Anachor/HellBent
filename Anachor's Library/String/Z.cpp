@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+
+///Z[i] = LCP(s, s[i....])
 vector<int> z_function(string s) {
     int n = s.size();
     vector<int> z(n);
@@ -10,32 +12,19 @@ vector<int> z_function(string s) {
         while (i+z[i]<n && s[i+z[i]] == s[z[i]])    z[i]++;
         if (i+z[i]-1>r)   l = i, r = i+z[i]-1;
     }
+    z[0] = s.size();
     return z;
 }
 
 
-///Solves SPOJ QUERYSTR
+///https://old.yosupo.jp/problem/zalgorithm
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
 
-    int t;
-    cin>>t;
-    while (t--) {
-        string s;
-        cin>>s;
-        int n = s.size();
-        reverse(s.begin(), s.end());
-        vector<int> ans = z_function(s);
-        ans[0] = n;
+    string s;
+    cin>>s;
 
-        int q;
-        cin>>q;
-        while (q--) {
-            int x;
-            cin>>x;
-            x = n-x;
-            cout<<ans[x]<<"\n";
-        }
-    }
+    for (int x: z_function(s))  cout<<x<<" ";
+    cout<<endl;
 }
