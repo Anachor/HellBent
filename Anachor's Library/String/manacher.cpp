@@ -27,6 +27,7 @@ struct Manacher {
     }
 };
 
+///Solves https://old.yosupo.jp/problem/enumerate_palindromes
 int main() {
     ios::sync_with_stdio(0);
     cin.tie(0);
