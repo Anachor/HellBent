@@ -1,11 +1,6 @@
-/// This is a collection of useful code for solving problems that
-/// involve modular linear equations. Note that all of the
-/// algorithms described here work on NON-NEGATIVE INTEGERS.
-/// Source: Stanford Notebook (modified)
-
 #include <bits/stdc++.h>
-#define LL long long
 using namespace std;
+typedef long long LL;
 typedef pair<LL, LL> PLL;
 
 LL gcd(LL u, LL v) {
@@ -75,10 +70,8 @@ LL inverse(LL a, LL m) {
 	return (x%m+m)%m;
 }
 
-/// Chinese remainder theorem (special case):
-/// find z such that z % m1 = r1, z % m2 = r2.
-/// Here, z is unique modulo M = lcm(m1, m2).
-/// Return (z, M).  On failure, M = -1.
+/// Chinese remainder theorem (special case): find z st z%m1 = r1, z%m2 = r2.
+/// z is unique modulo M = lcm(m1, m2). Returns (z, M). On failure, M = -1.
 PLL CRT(LL m1, LL r1, LL m2, LL r2) {
 	LL s, t;
 	LL g = egcd(m1, m2, s, t);
@@ -90,12 +83,8 @@ PLL CRT(LL m1, LL r1, LL m2, LL r2) {
 	return PLL(ans/g, M/g);
 }
 
-
-/// Chinese remainder theorem:
-/// find z such that z % m[i] = r[i] for all i.
-/// The solution is unique modulo M = lcm(m[i]).
-/// Return (z, M). On failure, M = -1.
-/// Note that we do not require the mod values to be co-prime.
+/// Chinese remainder theorem: find z st z%m[i] = r[i] for all i.
+/// z is unique modulo M = lcm(m[i]). Returns (z, M). On failure, M = -1.
 PLL CRT(const vector<LL> &m, const vector<LL> &r) {
 	PLL ans = PLL(r[0], m[0]);
 	for (LL i = 1; i < m.size(); i++) {
@@ -105,23 +94,19 @@ PLL CRT(const vector<LL> &m, const vector<LL> &r) {
 	return ans;
 }
 
-/// computes x and y such that ax + by = c
-/// returns whether the solution exists
+///computes x and y such that ax + by = c, returns whether the solution exists
 bool LinearDiophantine(LL a, LL b, LL c, LL &x, LL &y) {
 	if (!a && !b) {
-		if (c) return false;
-		x = y = 0;
-		return true;
+		if (c)          return false;
+		x = y = 0;      return true;
 	}
 	if (!a) {
-		if (c%b) return false;
-		x = 0; y = c/b;
-		return true;
+		if (c%b)        return false;
+		x = 0; y = c/b; return true;
 	}
 	if (!b) {
-		if (c%a) return false;
-		x = c/a; y = 0;
-		return true;
+		if (c%a)        return false;
+		x = c/a; y = 0; return true;
 	}
 	LL g = gcd(a, b);
 	if (c%g) return false;
@@ -131,10 +116,9 @@ bool LinearDiophantine(LL a, LL b, LL c, LL &x, LL &y) {
 }
 
 
-/** Find smallest primitive root of p assuming p is prime.
-if not, change phi to phi(p);
-*/
-
+/// Find smallest primitive root of p assuming p is prime.
+/// if not, change phi to phi(p);
+/// Possible optimization, generate primes and factorize using only primes
 LL primitive_root(LL p) {
     if (p == 2) return 1;
     LL phi = p-1, n = phi;
@@ -156,6 +140,43 @@ LL primitive_root(LL p) {
     return -1;
 }
 
+/// Tested in https://old.yosupo.jp/problem/discrete_logarithm_mod
+/// Returns minimum non-negative  st a^x = b (mod m), -1 on failure
+int discreteLog(int a, int b, int M) {
+    a %= M, b %= M;
+    int k = 1, add = 0, g;
+    while ((g = gcd(a, M)) > 1) {
+        if (b == k)     return add;
+        if (b % g)      return -1;
+        b /= g, M /= g, ++add;
+        k = (1LL*k*a/g)%M;
+    }
+
+    int RT = sqrt(M)+1, aRT = 1;
+    for (int i=0; i<RT; i++) aRT = (aRT*1LL*a)%M;
+
+    ///Change to gp_hash_table or other hashtable for speed
+    unordered_map<int, int> vals;
+    for (int i=0, cur=b; i<=RT; i++) {
+        vals[cur] = i;
+        cur = (cur*1LL*a)%M;
+    }
+
+    for (int i=1, cur=k; i<=M/RT+1; i++) {
+        cur = (cur*1LL*aRT)%M;
+        if (vals.find(cur) != vals.end())    return RT*i-vals[cur]+add;
+    }
+    return -1;
+}
+
+/// Tested in https://old.yosupo.jp/problem/kth_root_mod
+/// Returns x0 st x^a = b (mod P), -1 on failure, P must be prime
+int discreteRoot(int a, int b, int P) {
+    if (b%P == 0)     return    a == 0 ? -1 : 0;
+    int g = primitive_root(P);
+    int y = discreteLog(power(g, a, P), b, P);
+    return y == -1 ? -1 : power(g, y, P);
+}
 
 int main() {
 	// expected: 2
