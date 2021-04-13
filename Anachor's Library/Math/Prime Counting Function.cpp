@@ -60,25 +60,11 @@ namespace pcf{
     }
 }
 
+///Solves https://old.yosupo.jp/problem/counting_primes
 int main() {
     pcf::init();
-    int t;
-    cin>>t;
+    long long n;
+    cin>>n;
 
-    while (t--) {
-        int n;
-        cin>>n;
-
-        int lo = 1, hi = 2e9;
-
-        while (lo < hi) {
-            int m = (0LL + lo + hi)/2;
-            int pp = pcf::Lehmer(m);
-            int cc = m - 1 - pp;
-
-            if (cc < n)     lo = m+1;
-            else            hi = m;
-        }
-        cout<<lo-1<<endl;
-    }
+    cout<<pcf::Lehmer(n)<<endl;
 }

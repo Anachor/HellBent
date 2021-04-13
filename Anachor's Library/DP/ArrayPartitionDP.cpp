@@ -19,7 +19,7 @@ namespace ArrayPartitionDP {
     long long C;
     int n;
 
-    __attribute__((always_inline)) PLL operator+ (const PLL &a, const PLL &b) {
+    PLL operator+ (const PLL &a, const PLL &b) {
         return PLL(a.first+b.first, a.second+b.second);
     }
 
