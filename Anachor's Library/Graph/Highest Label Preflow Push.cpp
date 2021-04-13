@@ -24,9 +24,9 @@ struct HLPP {
     int n, s, t;
     HLPP(int n, int s, int t) :n(n), s(s), t(t) {}
 
-    void addEdge(int from, int to, int f, bool isDirected = true) {
-        adj[from].push_back({to, adj[to].size(), f});
-        adj[to].push_back({from, adj[from].size() - 1, isDirected ? 0 : f});
+    void addEdge(int from, int to, LL cap, LL revcap = 0) {
+        adj[from].push_back({to, adj[to].size(), cap});
+        adj[to].push_back({from, adj[from].size() - 1, revcap});
     }
 
     void updHeight(int v, int nh) {
@@ -83,15 +83,13 @@ struct HLPP {
         fill(excess, excess+n+1,0);
         excess[s] = INF, excess[t] = -INF;
         globalRelabel();
-        for (auto &e : adj[s])
-            push(s, e);
+        for (auto &e : adj[s])  push(s, e);
         for (; highest >= 0; highest--) {
             while (!lst[highest].empty()) {
                 int v = lst[highest].back();
                 lst[highest].pop_back();
                 discharge(v);
-                if (work > 4 * heur_n)
-                    globalRelabel();
+                if (work > 4 * heur_n)  globalRelabel();
             }
         }
         return excess[t] + INF;
@@ -99,7 +97,7 @@ struct HLPP {
 };
 
 
-
+/// https://www.spoj.com/problems/FASTFLOW/
 int main() {
     ios::sync_with_stdio(0);
     cin.tie(0);
@@ -115,7 +113,7 @@ int main() {
     while (m--) {
         int a, b, c;
         cin>>a>>b>>c;
-        hlpp.addEdge(a, b, c, 1);
+        hlpp.addEdge(a, b, c, c);
     }
     cout<<hlpp.calc()<<endl;
 }

@@ -2,7 +2,7 @@
 using namespace std;
 
 const int N = 1.1e6+7, K = 21;
-int ft[N];
+long long ft[N];
 
 void add(int x, long long val) {
     for (int idx=x; idx<N; idx += idx&-idx)

@@ -19,17 +19,14 @@ namespace ArrayPartitionDP {
     long long C;
     int n;
 
-    PLL operator+ (const PLL &a, const PLL &b) {
+    __attribute__((always_inline)) PLL operator+ (const PLL &a, const PLL &b) {
         return PLL(a.first+b.first, a.second+b.second);
-    }
-
-    PLL cost(int l, int r) {
-        return {base_cost(l, r)+C, 1};
     }
 
     ///Solves dp[i] = min(dp[j] + cost(j+1, i)) given that cost() is QF
     ///returns {dp[n], min no of partitions}
     PLL solve1D() {
+        auto cost = [&](int l, int r){ return PLL(base_cost(l, r)+C, 1); };
         vector<PLL> dp(n+1);
         vector<int> opt(n+1);
         deque<pair<int, int>> dq;
