@@ -2,13 +2,9 @@
 using namespace std;
 
 namespace FASTIO {
-    inline int readChar();
-    template <class T = long long> inline T readInt();   ///Change Datatype here
-    template <class T> inline void writeInt( T x, char end = 0 );
-    inline void writeChar( int x );
-    inline void writeWord( const char *s );
     static const int buf_size = 4096;
 
+    /** read */
     inline int getChar() {
         static char buf[buf_size];
         static int len = 0, pos = 0;
@@ -18,12 +14,12 @@ namespace FASTIO {
     }
 
     inline int readChar() {
-        int c = getChar();
+        int c = 0;
         while (c <= 32)     c = getChar();
         return c;
     }
 
-    template <class T>
+    template <class T = long long>
     inline T readInt() {
         int s = 1, c = readChar();
         T x = 0;
@@ -40,8 +36,8 @@ namespace FASTIO {
         write_buf[write_pos++] = x;
     }
 
-    template <class T>
-    inline void writeInt( T x, char end ) {
+    template <class T = long long>
+    inline void writeInt( T x, char end = 0) {
         if (x < 0)  writeChar('-'), x = -x;
         char s[24];
         int n = 0;
