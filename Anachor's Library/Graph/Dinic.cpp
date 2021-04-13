@@ -84,6 +84,8 @@ namespace Dinic {
         return flow;
     }
 
+    bool leftOfMinCut(int x) {return level[x] != -1;}
+
     /// Only works for undirected graph, Make sure to add UNDIRECTED edges. (u, v, c, c)
     /// returns n by n matrix flow, st flow[i][j] = maxFlow
     /// tree holds the edges of a gomory-hu tree of the graph
@@ -94,11 +96,11 @@ namespace Dinic {
         vector<int> par(n);
         for (int i=1; i<n; i++) {
             for (auto &e: edges)    e.flow = 0;
-            LL f = Dinic::maxFlow(i, par[i]);
+            LL f = maxFlow(i, par[i]);
             tree.push_back({i, par[i], f});
 
             for (int j=i+1; j<n; j++)
-                if (par[j] == par[i] && level[j] != -1) par[j] = i;
+                if (par[j] == par[i] && leftOfMinCut(j)) par[j] = i;
 
             flow[i][par[i]] = flow[par[i]][i] = f;
             for (int j=0; j<i; j++)
@@ -108,6 +110,8 @@ namespace Dinic {
     }
 }
 
+#define ALL_PAIR_FLOW_TEST
+#ifndef ALL_PAIR_FLOW_TEST
 /// https://www.spoj.com/problems/FASTFLOW/
 int main() {
     ios::sync_with_stdio(0);
@@ -122,34 +126,35 @@ int main() {
         int a, b, c;
         cin>>a>>b>>c;
         Dinic::addEdge(a, b, c, c);
-//        Dinic::addEdge(b, a, c, 1);
     }
     cout<<Dinic::maxFlow(s, t)<<endl;
 }
+#else
 
-/////AllPair Maxflow test
-/////Solves https://codeforces.com/gym/101480/problem/J
-//int main() {
-//    ios::sync_with_stdio(false);
-//    cin.tie(0);
-//
-//    int n, m;
-//    cin>>n>>m;
-//
-//    Dinic::init(n);
-//
-//    for (int i=0; i<m; i++) {
-//        int u, v;
-//        cin>>u>>v;
-//        u--; v--;
-//        Dinic::addEdge(u, v, 1, 1);
-//    }
-//
-//    vector<Dinic::Edge> e;
-//    auto f = Dinic::allPairMaxFlow(e);
-//
-//    long long ans = 0;
-//    for (int i=0; i<n; i++)
-//        for (int j=i+1; j<n; j++)   ans += f[i][j];
-//    cout<<ans<<endl;
-//}
+///AllPair Maxflow test
+///Solves https://codeforces.com/gym/101480/problem/J
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int n, m;
+    cin>>n>>m;
+
+    Dinic::init(n);
+
+    for (int i=0; i<m; i++) {
+        int u, v;
+        cin>>u>>v;
+        u--; v--;
+        Dinic::addEdge(u, v, 1, 1);
+    }
+
+    vector<Dinic::Edge> e;
+    auto f = Dinic::allPairMaxFlow(e);
+
+    long long ans = 0;
+    for (int i=0; i<n; i++)
+        for (int j=i+1; j<n; j++)   ans += f[i][j];
+    cout<<ans<<endl;
+}
+#endif
