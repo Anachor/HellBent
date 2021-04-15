@@ -1,7 +1,7 @@
 /**
-    Hungarian algorithm for minimum weighted bipartite matching. O(n^2 m)
+    Hungarian algorithm for minimum weighted bipartite matching. (1-indexed)
     For max cost, negate cost matrix and negate output.
-    Everything 1-indexed.
+    Complexity: O(n^2 m). n must not be greater than m.
 
     Input: (n+1) x (m+1) cost matrix. (0th row and column are useless)
     Output: (ans, ml), where ml[i] = match for node i on the left.
