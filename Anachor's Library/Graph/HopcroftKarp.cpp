@@ -14,17 +14,20 @@ using namespace std;
 
 namespace HopcroftKarp {
     const int maxN = 1e5+7, maxM = 1e5+7;     ///Check
-    int n, m;
+    int n, m, match;
     int vis[maxN], level[maxN], ml[maxN], mr[maxM];
     vector<int> edge[maxN];   /// constructing edges for left part only
 
     void init(int N, int M) {      /// N = nodes in left part, M = nodes in right part
         n = N, m = M;
-        for (int i = 1; i <= n; ++i) edge[i].clear();
+        for (int i=1; i<=n; i++)    edge[i].clear(), ml[i] = -1;
+        for (int i=1; i<=m; i++)    mr[i] = -1;
+        match = 0;
     }
 
     void add(int u, int v) {
         edge[u].push_back(v);
+        if (ml[u] == -1 && mr[v] == -1)     ml[u] = v, mr[v] = u, match++;
     }
 
     bool dfs(int u) {
@@ -32,8 +35,7 @@ namespace HopcroftKarp {
         for (int x: edge[u]) {
             int v = mr[x];
             if (v == -1 || (!vis[v] && level[u] < level[v] && dfs(v))) {
-                ml[u] = x;
-                mr[x] = u;
+                ml[u] = x; mr[x] = u;
                 return true;
             }
         }
@@ -41,25 +43,20 @@ namespace HopcroftKarp {
     }
 
     int matching() {
-        for (int i=1; i<=n; i++)    ml[i] = -1;
-        for (int i=1; i<=m; i++)    mr[i] = -1;
-
-        for (int match = 0;;) {
-            queue<int> que;
+        while (true) {
+            queue<int> q;
             for (int i = 1; i <= n; ++i) {
-                if (ml[i] == -1) {
-                    level[i] = 0;
-                    que.push(i);
-                } else level[i] = -1;
+                if (ml[i] == -1)    level[i] = 0, q.push(i);
+                else                level[i] = -1;
             }
-            while (!que.empty()) {
-                int u = que.front();
-                que.pop();
+            while (!q.empty()) {
+                int u = q.front();
+                q.pop();
                 for (int x: edge[u]) {
                     int v = mr[x];
                     if (v != -1 && level[v] < 0) {
                         level[v] = level[u] + 1;
-                        que.push(v);
+                        q.push(v);
                     }
                 }
             }
