@@ -16,7 +16,7 @@ struct Fenwick {
         return ans;
     }
 
-    ///first k such that sum(k) >= x, if none returns N.
+    ///first k such that sum(k) >= x, if none returns N=n+1.
     int get(long long x) {
         int ans = 0;
         for (int i=K-1; i>=0; i--) {
