@@ -13,7 +13,6 @@ To-Do (Priority):
 - Matroids(2)
 - Persistent Segtree (1)
 - Geometry (5)
-- floor_sum (4)
 - Polynomials (3)
 - Gaussian (5)
 - Dirichlet Stuff (3)
