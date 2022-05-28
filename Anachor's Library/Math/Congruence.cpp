@@ -1,3 +1,4 @@
+///Author: anachor
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long LL;
@@ -46,20 +47,17 @@ LL egcd(LL a, LL b, LL &x, LL &y) {
 	return a;
 }
 
-/// finds all solutions to ax = b (mod m)
-vector<LL> SolveCongruence(LL a, LL b, LL m) {
+/// returns (c, d) where x = c (mod d) equiv ax = b (mod m)
+///  if no solution, returns (-1, -1)
+pair<LL, LL> SolveCongruence(LL a, LL b, LL m) {
 	LL x, y;
-	vector<LL> ans;
 	LL g = egcd(a, m, x, y);
 	if (b%g == 0) {
-		x = (x*(b/g))%m;
-		if (x<0)    x+=m;
-		for (LL i=0; i<g; i++) {
-			ans.push_back(x);
-			x = (x+m/g)%m;
-		}
+        LL d = m/g;
+		x = ((x*(b/g))%d+d)%d;
+		return {x, d};
 	}
-	return ans;
+	return {-1, -1};
 }
 
 /// Computes b such that ab = 1 (mod m), returns -1 on failure
@@ -67,6 +65,7 @@ LL inverse(LL a, LL m) {
 	LL x, y;
 	LL g = egcd(a, m, x, y);
 	if (g > 1) return -1;
+	assert(abs(x) < m);
 	return (x%m+m)%m;
 }
 
@@ -81,17 +80,6 @@ PLL CRT(LL m1, LL r1, LL m2, LL r2) {
 	LL tt = ((t*r1)%m1)*m2;
 	LL ans = ((ss+tt)%M+M)%M;
 	return PLL(ans/g, M/g);
-}
-
-/// Chinese remainder theorem: find z st z%m[i] = r[i] for all i.
-/// z is unique modulo M = lcm(m[i]). Returns (z, M). On failure, M = -1.
-PLL CRT(const vector<LL> &m, const vector<LL> &r) {
-	PLL ans = PLL(r[0], m[0]);
-	for (LL i = 1; i < m.size(); i++) {
-		ans = CRT(ans.second, ans.first, m[i], r[i]);
-		if (ans.second == -1) break;
-	}
-	return ans;
 }
 
 ///computes x and y such that ax + by = c, returns whether the solution exists

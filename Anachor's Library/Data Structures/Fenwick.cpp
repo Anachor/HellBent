@@ -1,3 +1,7 @@
+/*
+Source: Folklore, Anachor( get )
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -29,10 +33,29 @@ struct Fenwick {
         return ans+1;
     }
 };
+
+struct Fenwick {
+    int N, K = 20;
+    vector<int> ft;
+    Fenwick(int n) : N(n+1), ft(n+1) {}
+
+    void add(int x, int val) {
+        for (int i=x; i<N; i+=i&-i) ft[i] += val;
+    }
+
+    int sum(int x) {
+        int ans = 0;
+        for (int i=x; i>0; i-=i&-i) ans += ft[i];
+        return ans;
+    }
+};
+
 /// Solves Timus 1521
 int main() {
     ios::sync_with_stdio(0);
     cin.tie(0);
+
+    Fenwick a, b;
 
     int n, k;
     cin>>n>>k;

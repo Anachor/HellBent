@@ -7,6 +7,8 @@ Iterative Implementation of FFT and FFTanymod. Complexity: O(N log N)
 than doing two ffts, but faster by about 30%.
 4. FFT accuracy depends on answer. x <= 5e14 (double), x <= 1e18(long double)
    where x = max(ans[i]) for FFT, and x = N*mod for anymod
+
+   Author: anachor
 **/
 
 #include<bits/stdc++.h>

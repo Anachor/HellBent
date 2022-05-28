@@ -8,6 +8,8 @@
     4.  getChainSegments(u, v) calculates these in O(logN) time
     5.  dfs(u, p) & HLD(u, p) are essential. The rest of the functions
         are auxiliary
+
+    Author: solaimanope
 */
 
 #include<bits/stdc++.h>

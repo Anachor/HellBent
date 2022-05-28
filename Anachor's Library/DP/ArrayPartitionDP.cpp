@@ -5,6 +5,8 @@ Req: cost() is QF. Complexity: O(n log^2)
 Possible optimizations for O(n log n)
 You can change solve1D() with linear CHT if cost(l, r) is of the form f(l)*g(r)
 Alternatively, it may be possible to remove the binary search in 1D-1D.
+
+Author: anachor
 */
 
 #include<bits/stdc++.h>

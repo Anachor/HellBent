@@ -1,6 +1,8 @@
 /**
 Implementation of various bitwise convolutions.
 Subset convo is O(2^K * K^2), rest are (2^K * K)
+Author: anachor
+
 **/
 
 #include<bits/stdc++.h>

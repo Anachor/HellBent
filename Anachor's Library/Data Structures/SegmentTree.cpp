@@ -1,6 +1,8 @@
 /**
   Solves SPOJ HORRIBLE - Horrible Queries
   Range Increment Update, Range Sum Query
+
+  Author: Folklore, Anachor
 **/
 
 #include <bits/stdc++.h>

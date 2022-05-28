@@ -1,6 +1,6 @@
 /**
 C++ routines for Computational Geometry (2D)
-Courtesy:  nodim, imAnik, rebornplusplus
+Courtesy:  nodim, imAnik, rebornplusplus, solaimanope, anachor
 */
 
 #include <bits/stdc++.h>

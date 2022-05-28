@@ -7,6 +7,7 @@ Complexity: O(N log N)
 897581057 = 107 * 2^23, G = 3
 998244353 = 119 * 2^23, G = 3
 
+Author: anachor
 **/
 
 #include<bits/stdc++.h>

@@ -1,5 +1,6 @@
 /**
     Simple Bitset Class with ability to perform range bitwise operations.
+    Author: Anachor
 **/
 
 

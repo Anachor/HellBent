@@ -1,3 +1,4 @@
+///Author: anachor
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -25,6 +26,7 @@ int C(int n, int r) {
     int denom = (1LL*invfac[r]*invfac[n-r])%M;
     return (1LL*fac[n]*denom)%M;
 }
+
 
 int main() {
     ios::sync_with_stdio(0);

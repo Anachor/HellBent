@@ -9,6 +9,8 @@ Requirement:
         M decreasing, x decreasing, useless(s-1, s-2, s-3)
 
 If queries are in arbitrary order, use query2 O(logn) per query.
+
+Source: Rezwan, Anachor (query2)
 **/
 
 

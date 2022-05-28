@@ -1,3 +1,6 @@
+///  Source: anachor, AlphaQ(Find Factor) 
+
+
 #include<bits/stdc++.h>
 using namespace std;
 

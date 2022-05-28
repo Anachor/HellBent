@@ -3,6 +3,8 @@ Knuth Morris Pratt String Matching
 Complexity: build - O(n)
             match - O(n+m)
             prefix automaton - O(n*alphabet)
+
+source: anachor, solaimanope (prefix automaton)
 */
 
 #include<bits/stdc++.h>

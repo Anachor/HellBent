@@ -1,3 +1,5 @@
+///Implementation of https://codeforces.com/blog/entry/83467
+/// Author: anachor
 #include<bits/stdc++.h>
 using namespace std;
 
