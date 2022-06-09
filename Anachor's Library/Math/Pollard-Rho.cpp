@@ -1,4 +1,4 @@
-///  Source: anachor, AlphaQ(Find Factor) 
+///  Source: folklore, AlphaQ(Find Factor) 
 
 
 #include<bits/stdc++.h>
