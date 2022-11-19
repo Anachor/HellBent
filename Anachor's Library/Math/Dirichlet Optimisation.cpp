@@ -51,16 +51,16 @@ namespace Dirichlet {
 
     unordered_map<long long, T> mem;
     T solve(long long x) {
-        if (x < RT)     return pre[x];
-        if (mem.count(x))     return mem[x];
+        auto get = [](long long x) {
+            return x < RT ? pre[x] : (mem.count(x) ? mem[x] : solve(x));
+        };
 
         T ans = sh(x);
         for (long long i=1, last=x; i*i<=x; i++) {
-            long long l=i, r=i, inv=last;
-            if (i > 1)     ans = (ans - (sg(r)-sg(l-1))*solve(inv));
-            l=x/(i+1)+1, r=last, inv=i;
-            if (last != i) ans = (ans - (sg(r)-sg(l-1))*solve(inv));
-            last = l-1;
+            if (i > 1)     ans = (ans - (sg(i)-sg(i-1))*get(last));
+            long long prv = x/(i+1);
+            if (last != i) ans = (ans - (sg(last)-sg(prv))*get(i));
+            last = prv;
         }
 
         return mem[x] = ans;
