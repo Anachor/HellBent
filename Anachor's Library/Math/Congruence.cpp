@@ -1,8 +1,12 @@
-///Author: anachor, Stanford Notebook
+///Author: anachor, Stanford Notebook, YouKnowWho
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long LL;
 typedef pair<LL, LL> PLL;
+
+inline LL modit(LL x, LL m) {
+	return x < 0 ? x%m+m : x%m;
+}
 
 LL gcd(LL u, LL v) {
     if (u == 0) return v;
@@ -12,19 +16,14 @@ LL gcd(LL u, LL v) {
     do {
         v >>= __builtin_ctzll(v);
         if (u > v) swap(u, v);
-        v = v - u;
+        v = v-u;
     } while (v);
     return u << shift;
 }
 
-/// computes lcm(a,b)
-LL lcm(LL a, LL b) {
-	return (a/gcd(a, b))*b;
-}
-
 /// (a^b) mod m via successive squaring
 LL power(LL a, LL b, LL m) {
-    a = (a%m+m)%m;
+    a = modit(a, m);
 	LL ans = 1;
 	while (b) {
 		if (b & 1) ans = (ans*a)%m;
@@ -34,7 +33,7 @@ LL power(LL a, LL b, LL m) {
 	return ans;
 }
 
-/// returns g = gcd(a, b); finds x, y such that d = ax + by
+/// returns g = gcd(a, b); finds x, y such that d = ax+by
 LL egcd(LL a, LL b, LL &x, LL &y) {
 	LL xx = y = 0;
 	LL yy = x = 1;
@@ -46,27 +45,12 @@ LL egcd(LL a, LL b, LL &x, LL &y) {
 	}
 	return a;
 }
-
-/// returns (c, d) where x = c (mod d) equiv ax = b (mod m)
-///  if no solution, returns (-1, -1)
-pair<LL, LL> SolveCongruence(LL a, LL b, LL m) {
-	LL x, y;
-	LL g = egcd(a, m, x, y);
-	if (b%g == 0) {
-        LL d = m/g;
-		x = ((x*(b/g))%d+d)%d;
-		return {x, d};
-	}
-	return {-1, -1};
-}
-
 /// Computes b such that ab = 1 (mod m), returns -1 on failure
 LL inverse(LL a, LL m) {
 	LL x, y;
 	LL g = egcd(a, m, x, y);
 	if (g > 1) return -1;
-	assert(abs(x) < m);
-	return (x%m+m)%m;
+	return modit(x, m);
 }
 
 /// Chinese remainder theorem (special case): find z st z%m1 = r1, z%m2 = r2.
@@ -78,11 +62,25 @@ PLL CRT(LL m1, LL r1, LL m2, LL r2) {
 	LL M = m1*m2;
 	LL ss = ((s*r2)%m2)*m1;
 	LL tt = ((t*r1)%m1)*m2;
-	LL ans = ((ss+tt)%M+M)%M;
+	LL ans = modit(ss+tt, M);
 	return PLL(ans/g, M/g);
 }
 
-///computes x and y such that ax + by = c, returns whether the solution exists
+/// returns (c, d) where x = c (mod d) equiv ax = b (mod m)
+///  if no solution, returns (-1, -1)
+pair<LL, LL> SolveCongruence(LL a, LL b, LL m) {
+	LL x, y;
+	LL g = egcd(a, m, x, y);
+	if (b%g == 0) {
+        LL d = m/g;
+		x = modit(x*(b/g), d);
+		return {x, d};
+	}
+	return {-1, -1};
+}
+
+
+///computes x and y such that ax+by = c, returns whether the solution exists
 bool LinearDiophantine(LL a, LL b, LL c, LL &x, LL &y) {
 	if (!a && !b) {
 		if (c)          return false;
@@ -98,7 +96,7 @@ bool LinearDiophantine(LL a, LL b, LL c, LL &x, LL &y) {
 	}
 	LL g = gcd(a, b);
 	if (c%g) return false;
-	x = c/g * inverse(a/g, b/g);
+	x = c/g*inverse(a/g, b/g);
 	y = (c-a*x)/b;
 	return true;
 }
@@ -135,8 +133,8 @@ int discreteLog(int a, int b, int M) {
     int k = 1, add = 0, g;
     while ((g = gcd(a, M)) > 1) {
         if (b == k)     return add;
-        if (b % g)      return -1;
-        b /= g, M /= g, ++add;
+        if (b%g)      return -1;
+        b/=g, M/=g, ++add;
         k = (1LL*k*a/g)%M;
     }
 
@@ -166,6 +164,34 @@ int discreteRoot(int a, int b, int P) {
     return y == -1 ? -1 : power(g, y, P);
 }
 
+
+// Tonnelli Shanks: finds x st x^2 = a (mod p)
+// p must be prime. returns -1 if none. 
+// complexity: O(log^2 p) worst case, O(log p) on average
+
+int SQRT(int a, int p) {
+	a = modit(a, p);
+	if (a == 0) return 0;
+	if (power(a, (p-1)/2, p) != 1)  return -1; 	
+	if (p%4==3) 					return power(a, (p+1)/4, p);
+	int s = p-1, n = 2;
+	int r = 0, m;
+	while (s%2 == 0) ++r, s/=2;
+	// find a non-square mod p
+	while (power(n, (p-1)/2, p) != p-1) ++n;
+	int x = power(a, (s+1)/2, p);
+	int b = power(a, s, p), g = power(n, s, p);
+	for (;; r = m) {
+		int t = b;
+		for (m = 0; m<r && t!=1; ++m) t = 1LL*t*t%p;
+		if (m == 0) return x;
+		int gs = power(g, 1LL << (r-m-1), p);
+		g = 1LL*gs*gs%p;
+		x = 1LL*x*gs%p;
+		b = 1LL*b*g%p;
+	}
+}
+
 int main() {
 	// expected: 2
 	cout << gcd(14, 30) << endl;
@@ -175,23 +201,23 @@ int main() {
 	LL g = egcd(14, 30, x, y);
 	cout << g << " " << x << " " << y << endl;
 
-	// expected: 95 45
-    vector<long long> sols = SolveCongruence(14, 30, 100);
-	for (LL i = 0; i < sols.size(); i++) cout << sols[i] << " ";
-	cout << endl;
+	// expected: 45 50
+    auto sols = SolveCongruence(14, 30, 100);
+	cout << sols.first<<" "<<sols.second << endl;
 
 	// expected: 8
 	cout << inverse(8, 9) << endl;
 
-	// expected: 23 105
-	//           11 12
-	PLL ans = CRT({3,5,7}, {2,3,2});
-	cout << ans.first << " " << ans.second << endl;
-	ans = CRT({4,6}, {3,5});
+	// expected: 43 45
+	auto ans = CRT(9, 7, 15, 13);
 	cout << ans.first << " " << ans.second << endl;
 
 	// expected: 5 -15
 	if (!LinearDiophantine(7, 2, 5, x, y)) cout << "ERROR" << endl;
 	else cout << x << " " << y << endl;
+
+	// expected: 2 4 -1
+	cout<<SQRT(4, 7)<<" "<<SQRT(9, 7)<<" "<<SQRT(6, 11)<<endl;
+
 	return 0;
 }
