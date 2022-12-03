@@ -5,7 +5,7 @@ typedef long long LL;
 typedef pair<LL, LL> PLL;
 
 inline LL modit(LL x, LL m) {
-	return x < 0 ? x%m+m : x%m;
+	LL z = x%m; return z<0 ? z+m : z;
 }
 
 LL gcd(LL u, LL v) {
