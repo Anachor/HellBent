@@ -13,6 +13,7 @@
     Practice Problems:
         https://www.hackerrank.com/contests/projecteuler/challenges/euler228/problem
         https://projecteuler.net/problem=512
+        https://projecteuler.net/problem=643
 
 */
 
@@ -49,16 +50,16 @@ namespace Dirichlet {
     auto sg = [](LL n) { return n; };   /// 2. returns sum{i=1..n} g(i)
     auto sh = [](LL n) { return 1; };   /// 3. returns sum{i=1..n} h(i)
 
-    unordered_map<long long, T> mem;
-    T solve(long long x) {
-        auto get = [](long long x) {
+    unordered_map<LL, T> mem;
+    T solve(LL x) {
+        auto get = [](LL x) {
             return x < RT ? pre[x] : (mem.count(x) ? mem[x] : solve(x));
         };
 
         T ans = sh(x);
-        for (long long i=1, last=x; i*i<=x; i++) {
+        for (LL i=1, last=x; i*i<=x; i++) {
             if (i > 1)     ans = (ans - (sg(i)-sg(i-1))*get(last));
-            long long prv = x/(i+1);
+            LL prv = x/(i+1);
             if (last != i) ans = (ans - (sg(last)-sg(prv))*get(i));
             last = prv;
         }
