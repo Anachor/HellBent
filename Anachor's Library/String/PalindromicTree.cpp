@@ -13,6 +13,7 @@ namespace PalTree {
         int sufflink;   ///largest suffix palindrome of this node
         int chain;      ///# of non-empty nodes on the chain of suffix links
         int next[26];   ///next[c] is the palindrome by adding c to both sides
+
     } tree[MAXN];
 
     int size;   /// number of nodes currently in Palindromic Tree
@@ -50,7 +51,7 @@ namespace PalTree {
         return true;
     }
     void initTree() {
-        memset(tree, 0, sizeof tree);   ///CAREFUL: SEVERAL TESTCASES
+        for (int i=0; i<MAXN; i++)  tree[i] = node();
         size = 2;
         suff = 2;
         ///1: root with len -1; 2: root with len 0
